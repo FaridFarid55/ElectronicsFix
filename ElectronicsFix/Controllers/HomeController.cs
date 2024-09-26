@@ -18,6 +18,7 @@ namespace ElectronicsFix.Controllers
             return View();
         }
 
+
         public IActionResult Privacy()
         {
             return View();
