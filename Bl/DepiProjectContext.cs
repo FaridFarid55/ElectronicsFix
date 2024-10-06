@@ -1,4 +1,5 @@
-﻿namespace Bl;
+﻿
+namespace Bl;
 
 public partial class DepiProjectContext : DbContext
 {
@@ -36,13 +37,14 @@ public partial class DepiProjectContext : DbContext
     {
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0BE6AEC5CF");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B95CEDCD5");
 
             entity.Property(e => e.CategoryName).HasMaxLength(100);
             entity.Property(e => e.CreatedBy).HasMaxLength(50);
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.ImagePath).HasMaxLength(200);
             entity.Property(e => e.UpdatedBy).HasMaxLength(50);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
@@ -53,7 +55,7 @@ public partial class DepiProjectContext : DbContext
 
         modelBuilder.Entity<Consultation>(entity =>
         {
-            entity.HasKey(e => e.ConsultationId).HasName("PK__Consulta__5D014A9841766AF7");
+            entity.HasKey(e => e.ConsultationId).HasName("PK__Consulta__5D014A98E71095FA");
 
             entity.HasIndex(e => e.CustomerId, "IX_Consultations_CustomerId");
 
@@ -78,11 +80,11 @@ public partial class DepiProjectContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__A4AE64D86351C896");
+            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__A4AE64D8279EDDF0");
 
             entity.HasIndex(e => e.Email, "IX_Customers_Email");
 
-            entity.HasIndex(e => e.Email, "UQ__Customer__A9D105343348F8DA").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Customer__A9D10534AD9FBD18").IsUnique();
 
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.ConfirmPassword).HasMaxLength(100);
@@ -96,7 +98,7 @@ public partial class DepiProjectContext : DbContext
 
         modelBuilder.Entity<Delivery>(entity =>
         {
-            entity.HasKey(e => e.DeliveryId).HasName("PK__Deliveri__626D8FCE868DF944");
+            entity.HasKey(e => e.DeliveryId).HasName("PK__Deliveri__626D8FCEE3CDBDD4");
 
             entity.Property(e => e.DeliveryAddress).HasMaxLength(255);
             entity.Property(e => e.DeliveryName).HasMaxLength(100);
@@ -112,11 +114,11 @@ public partial class DepiProjectContext : DbContext
 
         modelBuilder.Entity<Engineer>(entity =>
         {
-            entity.HasKey(e => e.EngineerId).HasName("PK__Engineer__1FA0F1CE1796EE81");
+            entity.HasKey(e => e.EngineerId).HasName("PK__Engineer__1FA0F1CE1336A49F");
 
             entity.HasIndex(e => e.Email, "IX_Engineers_Email");
 
-            entity.HasIndex(e => e.Email, "UQ__Engineer__A9D105346943AC0E").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Engineer__A9D105345530756A").IsUnique();
 
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.ConfirmPassword).HasMaxLength(100);
@@ -129,7 +131,7 @@ public partial class DepiProjectContext : DbContext
 
         modelBuilder.Entity<Item>(entity =>
         {
-            entity.HasKey(e => e.ItemId).HasName("PK__Items__727E838B8687D52C");
+            entity.HasKey(e => e.ItemId).HasName("PK__Items__727E838B91CA8EA6");
 
             entity.HasIndex(e => e.CategoryId, "IX_Items_CategoryId");
 
@@ -154,7 +156,7 @@ public partial class DepiProjectContext : DbContext
 
         modelBuilder.Entity<ItemDetail>(entity =>
         {
-            entity.HasKey(e => e.ItemDetailsId).HasName("PK__ItemDeta__95C3001ABB02C8B5");
+            entity.HasKey(e => e.ItemDetailsId).HasName("PK__ItemDeta__95C3001A4509211B");
 
             entity.Property(e => e.CreatedBy).HasMaxLength(50);
             entity.Property(e => e.CreatedDate)
@@ -174,7 +176,7 @@ public partial class DepiProjectContext : DbContext
 
         modelBuilder.Entity<ItemDiscount>(entity =>
         {
-            entity.HasKey(e => e.ItemDiscountId).HasName("PK__ItemDisc__495136BA39C19BF8");
+            entity.HasKey(e => e.ItemDiscountId).HasName("PK__ItemDisc__495136BAC5FE1C5A");
 
             entity.HasIndex(e => e.ItemId, "IX_ItemDiscounts_ItemId");
 
@@ -190,7 +192,7 @@ public partial class DepiProjectContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCFDC2191C1");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF70D179EC");
 
             entity.HasIndex(e => e.CustomerId, "IX_Orders_CustomerId");
 
@@ -214,7 +216,7 @@ public partial class DepiProjectContext : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A38E66E8155");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A3863E9243E");
 
             entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.PaymentDate)

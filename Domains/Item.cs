@@ -1,4 +1,4 @@
-﻿namespace Bl;
+﻿namespace Domains;
 
 public partial class Item
 {
@@ -12,13 +12,15 @@ public partial class Item
 
     public int CategoryId { get; set; }
 
-    public string? ItemType { get; set; }
+    public string ItemType { get; set; } = null!;
 
     public int? ItemDetailsId { get; set; }
 
-    public string? ImagePath { get; set; }
+    public string ImagePath { get; set; } = null!;
 
     public string? Description { get; set; }
+
+    public bool? OnDelete { get; set; }
 
     public virtual Category Category { get; set; } = null!;
 

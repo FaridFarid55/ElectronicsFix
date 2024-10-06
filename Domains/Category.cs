@@ -1,4 +1,7 @@
-﻿namespace Bl;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Domains;
 
 public partial class Category
 {
@@ -6,15 +9,19 @@ public partial class Category
 
     public string CategoryName { get; set; } = null!;
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime? CreatedDate { get; set; }
 
     public string? CreatedBy { get; set; }
+
+    public string? ImagePath { get; set; }
 
     public string? UpdatedBy { get; set; }
 
     public DateTime? UpdatedDate { get; set; }
 
     public int? ParentCategoryId { get; set; }
+
+    public bool? OnDelete { get; set; }
 
     public virtual ICollection<Category> InverseParentCategory { get; set; } = new List<Category>();
 

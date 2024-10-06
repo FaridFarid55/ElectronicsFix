@@ -1,26 +1,29 @@
-﻿namespace Bl;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Domains;
 
 public partial class ItemDetail
 {
     public int ItemDetailsId { get; set; }
 
-    public string? Gpu { get; set; }
+    public string Gpu { get; set; } = null!;
 
-    public string? HardDisk { get; set; }
+    public string HardDisk { get; set; } = null!;
 
-    public string? Processor { get; set; }
+    public string Processor { get; set; } = null!;
 
-    public string? RamSize { get; set; }
+    public string RamSize { get; set; } = null!;
 
-    public string? ScreenResolution { get; set; }
+    public string ScreenResolution { get; set; } = null!;
 
-    public string? ScreenSize { get; set; }
+    public string ScreenSize { get; set; } = null!;
 
-    public string? Weight { get; set; }
+    public string Weight { get; set; } = null!;
 
-    public string? OsName { get; set; }
+    public string OsName { get; set; } = null!;
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime? CreatedDate { get; set; }
 
     public string? CreatedBy { get; set; }
 

@@ -1,4 +1,7 @@
-﻿namespace Bl;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Domains;
 
 public partial class Payment
 {
