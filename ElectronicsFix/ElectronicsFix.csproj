@@ -8,11 +8,33 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Ui\" />
+    <Folder Include="Resources\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="wwwroot\Admin\assets\css\" />
+    <Folder Include="wwwroot\Admin\assets\js\" />
+    <Folder Include="wwwroot\Admin\assets\images\" />
+    <Folder Include="wwwroot\Uploads\Item\" />
+    <Folder Include="wwwroot\Uploads\Categories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bl\Bl.csproj" />
+    <ProjectReference Include="..\Domains\Domains.csproj" />
   </ItemGroup>
 
 </Project>

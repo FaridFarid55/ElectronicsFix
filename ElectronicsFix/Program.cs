@@ -9,6 +9,9 @@ namespace ElectronicsFix
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Add data bace
+            builder.Services.AddDbContext<DepiProjectContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefultConnection")));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,8 +30,12 @@ namespace ElectronicsFix
             app.UseAuthorization();
 
             app.MapControllerRoute(
+                               name: "admin",
+                               pattern: "{Area:exists}/{Controller=Home}/{action=Index}/{id?}");
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
             app.Run();
         }
