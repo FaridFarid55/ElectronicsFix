@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ElectronicsFix Admin Dashboard</title>
+
+    <!-- Admin dashboard CSS -->
+    <link rel="stylesheet" href="~/admin/assets/vendors/mdi/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="~/admin/assets/vendors/css/vendor.bundle.base.css" />
+    <link rel="stylesheet" href="~/admin/assets/css/style.css" /> <!-- Template's main CSS -->
+    <!-- Favicon (optional) -->
+    <link rel="shortcut icon" href="~/admin/assets/images/favicon.png" />
+
+    <!-- Optionally include Bootstrap if needed for compatibility -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Custom admin CSS (if needed) -->
+    <link rel="stylesheet" href="~/admin/assets/css/custom-admin.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- Top Navbar (Admin Dashboard) -->
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" href="#">ElectronicsFix Admin</a>
+                <a class="navbar-brand brand-logo-mini" href="#"><img src="~/admin/assets/images/logo-mini.svg" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="mdi mdi-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Logout", "Account")">
+                            <i class="mdi mdi-logout"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Sidebar (Admin Dashboard) -->
+        <div class="container-fluid page-body-wrapper">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <div class="nav-link">
+                            <div class="nav-profile-image">
+                                <img src="~/admin/assets/images/faces/face1.jpg" alt="profile" />
+                            </div>
+                            <div class="nav-profile-text d-flex flex-column">
+                                <span class="font-weight-bold mb-2">Admin Name</span>
+                                <span class="text-secondary text-small">Administrator</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">
+                            <i class="mdi mdi-home"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Engineers")">
+                            <i class="mdi mdi-account-multiple"></i>
+                            <span class="menu-title">Manage Engineers</span>
+                        </a>
+                    </li>
+                    <!-- Add more sidebar links as needed -->
+                </ul>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @RenderBody() <!-- Main content from views will be injected here -->
+                </div>
+
+                <!-- Footer -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">© 2024 ElectronicsFix Admin</span>
+                        <span class="float-none float-sm-end mt-1 mt-sm-0 text-end">
+                            <a href="@Url.Action("Privacy", "Home")">Privacy Policy</a>
+                        </span>
+                    </div>
+                </footer>
+            </div>
+        </div> <!-- End of page-body-wrapper -->
+    </div> <!-- End of container-scroller -->
+    <!-- Admin dashboard scripts -->
+    <script src="~/admin/assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/admin/assets/js/misc.js"></script>
+    <script src="~/admin/assets/js/off-canvas.js"></script>
+    <script src="~/admin/assets/js/hoverable-collapse.js"></script>
+
+    <!-- Optionally include Bootstrap JS if needed -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

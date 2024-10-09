@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Domains.Engineer>
+
+@{
+    ViewData["Title"] = "Engineer Management";
+    Layout = "~/Areas/admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h3 class="page-title"> Engineer Management </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Engineers" asp-action="Index">Engineer List</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Engineer Management</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" asp-controller="Engineers" asp-action="Create">Create New Engineer</a>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+                        <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Phone)</th>
+                        <th>@Html.DisplayNameFor(model => model.Address)</th>
+                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                        <th>@Html.DisplayNameFor(model => model.Password)</th>
+                        <th>@Html.DisplayNameFor(model => model.ConfirmPassword)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Password)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ConfirmPassword)</td>
+                            <td>
+                                <a class="btn btn-sm btn-warning" asp-controller="Engineers" asp-action="Edit" asp-route-id="@item.EngineerId">Edit</a>
+                                <a class="btn btn-sm btn-info" asp-controller="Engineers" asp-action="Details" asp-route-id="@item.EngineerId">Details</a>
+                                <a class="btn btn-sm btn-danger" asp-controller="Engineers" asp-action="Delete" asp-route-id="@item.EngineerId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

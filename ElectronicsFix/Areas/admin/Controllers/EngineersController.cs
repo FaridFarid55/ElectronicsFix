@@ -8,8 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Bl;
 using Domains;
 
-namespace ElectronicsFix.Controllers
+namespace ElectronicsFix.Areas.admin.Controllers
 {
+    [Area("admin")]
     public class EngineersController : Controller
     {
         private readonly DepiProjectContext _context;
@@ -22,7 +23,9 @@ namespace ElectronicsFix.Controllers
         // GET: Engineers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Engineers.ToListAsync());
+            var engineers = await _context.Engineers.ToListAsync();
+            Console.WriteLine($"Number of engineers: {engineers.Count}");
+            return View(engineers);
         }
 
         // GET: Engineers/Details/5
