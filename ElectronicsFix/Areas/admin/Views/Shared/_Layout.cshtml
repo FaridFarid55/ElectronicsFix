@@ -23,7 +23,7 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="~/Admin/assets/images/favicon.png" />
 
-    @RenderSection("Style", false)
+    @await RenderSectionAsync("Style", required: false)
 </head>
 <body>
     <div class="container-scroller">
@@ -404,6 +404,6 @@
     <!-- Custom js for this page -->
     <script src="~/Admin/assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
-    @RenderSection("Script", false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

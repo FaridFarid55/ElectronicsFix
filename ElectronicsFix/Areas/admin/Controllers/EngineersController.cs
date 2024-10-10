@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Bl;
-using Domains;
+﻿using Domains;
 
 namespace ElectronicsFix.Areas.admin.Controllers
 {
@@ -24,7 +16,6 @@ namespace ElectronicsFix.Areas.admin.Controllers
         public async Task<IActionResult> Index()
         {
             var engineers = await _context.Engineers.ToListAsync();
-            Console.WriteLine($"Number of engineers: {engineers.Count}");
             return View(engineers);
         }
 
@@ -53,18 +44,31 @@ namespace ElectronicsFix.Areas.admin.Controllers
         }
 
         // POST: Engineers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EngineerId,FirstName,LastName,Phone,Address,Email,Password,ConfirmPassword")] Engineer engineer)
         {
+            // Check if passwords match
+            if (engineer.Password != engineer.ConfirmPassword)
+            {
+                ModelState.AddModelError(string.Empty, "Passwords do not match.");
+                return View(engineer);
+            }
+
+            // Check if email already exists in the database
+            if (_context.Engineers.Any(e => e.Email == engineer.Email))
+            {
+                ModelState.AddModelError("Email", "Email address is already taken.");
+                return View(engineer);
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(engineer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(engineer);
         }
 
@@ -85,8 +89,6 @@ namespace ElectronicsFix.Areas.admin.Controllers
         }
 
         // POST: Engineers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EngineerId,FirstName,LastName,Phone,Address,Email,Password,ConfirmPassword")] Engineer engineer)
@@ -94,6 +96,12 @@ namespace ElectronicsFix.Areas.admin.Controllers
             if (id != engineer.EngineerId)
             {
                 return NotFound();
+            }
+
+            if (engineer.Password != engineer.ConfirmPassword)
+            {
+                ModelState.AddModelError(string.Empty, "Passwords do not match.");
+                return View(engineer);
             }
 
             if (ModelState.IsValid)
@@ -105,7 +113,7 @@ namespace ElectronicsFix.Areas.admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EngineerExists(engineer.EngineerId))
+                    if (!await EngineerExists(engineer.EngineerId))
                     {
                         return NotFound();
                     }
@@ -152,9 +160,16 @@ namespace ElectronicsFix.Areas.admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EngineerExists(int id)
+        private async Task<bool> EngineerExists(int id)
         {
-            return _context.Engineers.Any(e => e.EngineerId == id);
+            return await _context.Engineers.AnyAsync(e => e.EngineerId == id);
+        }
+
+        // Action to check if email already exists (used in Remote validation)
+        public IActionResult CheckEmailExists(string email)
+        {
+            var emailExists = _context.Engineers.Any(e => e.Email == email);
+            return Json(!emailExists); // Returns true if email is unique, false if exists
         }
     }
 }
