@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicsFix", "ElectronicsFix\ElectronicsFix.csproj", "{8F9B8376-2438-43A0-BA85-8F04155DA8F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicsFix", "ElectronicsFix\ElectronicsFix.csproj", "{8F9B8376-2438-43A0-BA85-8F04155DA8F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bl", "Bl\Bl.csproj", "{153ADE19-8D60-495C-957B-940C12DB2380}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domains", "Domains\Domains.csproj", "{31422466-7714-4C88-AB8C-67E0B942C32A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{8F9B8376-2438-43A0-BA85-8F04155DA8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F9B8376-2438-43A0-BA85-8F04155DA8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F9B8376-2438-43A0-BA85-8F04155DA8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{153ADE19-8D60-495C-957B-940C12DB2380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153ADE19-8D60-495C-957B-940C12DB2380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153ADE19-8D60-495C-957B-940C12DB2380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153ADE19-8D60-495C-957B-940C12DB2380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31422466-7714-4C88-AB8C-67E0B942C32A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31422466-7714-4C88-AB8C-67E0B942C32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31422466-7714-4C88-AB8C-67E0B942C32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31422466-7714-4C88-AB8C-67E0B942C32A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
