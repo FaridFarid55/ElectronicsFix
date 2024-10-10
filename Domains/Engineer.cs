@@ -10,10 +10,12 @@ public partial class Engineer
     public int EngineerId { get; set; }
 
     [Required]
+    [Display(Name = "First Name")]
     [StringLength(100)]
     public string FirstName { get; set; } = null!;
 
     [Required]
+    [Display(Name = "Last Name")]
     [StringLength(100)]
     public string LastName { get; set; } = null!;
 
@@ -33,6 +35,7 @@ public partial class Engineer
     public string Password { get; set; } = null!;
 
     [Required]
+    [Display(Name = "Confirm Password")]
     [StringLength(100)]
     public string ConfirmPassword { get; set; } = null!;
 

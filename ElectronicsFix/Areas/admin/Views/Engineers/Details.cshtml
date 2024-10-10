@@ -10,7 +10,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
-            <li class="breadcrumb-item"><a asp-controller="Engineers" asp-action="Index">Engineer List</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Engineers" asp-action="Index">Engineers List</a></li>
             <li class="breadcrumb-item active" aria-current="page">Engineer Details</li>
         </ol>
     </nav>
@@ -34,13 +34,7 @@
             <dd class="col-sm-9"> @Html.DisplayFor(model => model.Address) </dd>
 
             <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.Email) </dt>
-            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Email) </dd>
-
-            <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.Password) </dt>
-            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Password) </dd>
-
-            <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.ConfirmPassword) </dt>
-            <dd class="col-sm-9"> @Html.DisplayFor(model => model.ConfirmPassword) </dd>
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Email) </dd>           
         </dl>
 
         <div class="form-group">

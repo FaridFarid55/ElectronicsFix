@@ -10,8 +10,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
-            <li class="breadcrumb-item"><a asp-controller="Engineers" asp-action="Index">Engineer List</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Engineer Management</li>
+            <li class="breadcrumb-item active" aria-current="page">Engineers List</li>
         </ol>
     </nav>
 </div>
@@ -43,10 +42,18 @@
                             <td>@Html.DisplayFor(modelItem => item.Address)</td>
                             <td>@Html.DisplayFor(modelItem => item.Email)</td>
                             <td>
-                                <a class="btn btn-sm btn-warning" asp-controller="Engineers" asp-action="Edit" asp-route-id="@item.EngineerId">Edit</a>
-                                <a class="btn btn-sm btn-info" asp-controller="Engineers" asp-action="Details" asp-route-id="@item.EngineerId">Details</a>
-                                <a class="btn btn-sm btn-danger" asp-controller="Engineers" asp-action="Delete" asp-route-id="@item.EngineerId">Delete</a>
+                                <a asp-controller="Engineers" asp-action="Edit" asp-route-id="@item.EngineerId" title="Edit" style="margin-right: 10px;">
+                                    <i class="fas fa-edit" style="font-size: 1.2em; color: #ffc107;"></i> <!-- Keep the color of the "warning" button -->
+                                </a>
+                                <a asp-controller="Engineers" asp-action="Details" asp-route-id="@item.EngineerId" title="Details" style="margin-right: 10px;">
+                                    <i class="fas fa-info-circle" style="font-size: 1.2em; color: #17a2b8;"></i> <!-- Keep the color of the "info" button -->
+                                </a>
+                                <a asp-controller="Engineers" asp-action="Delete" asp-route-id="@item.EngineerId" title="Delete">
+                                    <i class="fas fa-trash-alt" style="font-size: 1.2em; color: #dc3545;"></i> <!-- Keep the color of the "danger" button -->
+                                </a>
                             </td>
+
+
                         </tr>
                     }
                 </tbody>

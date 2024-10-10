@@ -1,4 +1,5 @@
 ﻿using Domains;
+using BCrypt.Net;
 
 namespace ElectronicsFix.Areas.admin.Controllers
 {
@@ -47,33 +48,38 @@ namespace ElectronicsFix.Areas.admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EngineerId,FirstName,LastName,Phone,Address,Email,Password,ConfirmPassword")] Engineer engineer)
+    {
+        // Check if passwords match
+        if (engineer.Password != engineer.ConfirmPassword)
         {
-            // Check if passwords match
-            if (engineer.Password != engineer.ConfirmPassword)
-            {
-                ModelState.AddModelError(string.Empty, "Passwords do not match.");
-                return View(engineer);
-            }
-
-            // Check if email already exists in the database
-            if (_context.Engineers.Any(e => e.Email == engineer.Email))
-            {
-                ModelState.AddModelError("Email", "Email address is already taken.");
-                return View(engineer);
-            }
-
-            if (ModelState.IsValid)
-            {
-                _context.Add(engineer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
+            ModelState.AddModelError(string.Empty, "Passwords do not match.");
             return View(engineer);
         }
 
-        // GET: Engineers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // Check if email already exists in the database
+        if (_context.Engineers.Any(e => e.Email == engineer.Email))
+        {
+            ModelState.AddModelError("Email", "Email address is already taken.");
+            return View(engineer);
+        }
+
+        // Hash the password and confirm password
+        engineer.Password = BCrypt.Net.BCrypt.HashPassword(engineer.Password);
+        engineer.ConfirmPassword = engineer.Password; // Assign the hashed password to ConfirmPassword as well
+
+        if (ModelState.IsValid)
+        {
+            _context.Add(engineer);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(engineer);
+    }
+
+
+    // GET: Engineers/Edit/5
+    public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
