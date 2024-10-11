@@ -1,32 +1,14 @@
-﻿@model Domains.Engineer
+﻿@model Engineer
 
 @{
     ViewData["Title"] = "Create Engineer";
-    Layout = "~/Areas/admin/Views/Shared/_AdminLayout.cshtml";
 }
-<!--<head>
-    <style>
-        input.form-control {
-            color: white;
-        }
-
-        input::placeholder {
-            color: white;
-        }
-
-        input.form-control:focus {
-            color: white;
-        }
-    </style>
-</head>-->
-
 
 <div class="page-header">
     <h3 class="page-title"> Create Engineer </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
-            <li class="breadcrumb-item"><a asp-controller="Engineers" asp-action="Index">Engineers List</a></li>
+            <li class="breadcrumb-item"><a href="/admin/Engineers/Index">Engineers List</a></li>
             <li class="breadcrumb-item active" aria-current="page">Create Engineer</li>
         </ol>
     </nav>

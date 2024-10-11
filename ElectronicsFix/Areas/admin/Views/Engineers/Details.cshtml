@@ -1,16 +1,14 @@
-﻿@model Domains.Engineer
+﻿@model Engineer
 
 @{
     ViewData["Title"] = "Engineer Details";
-    Layout = "~/Areas/admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="page-header">
     <h3 class="page-title"> Engineer Details </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
-            <li class="breadcrumb-item"><a asp-controller="Engineers" asp-action="Index">Engineers List</a></li>
+            <li class="breadcrumb-item"><a href="/admin/Engineers/Index">Engineers List</a></li>
             <li class="breadcrumb-item active" aria-current="page">Engineer Details</li>
         </ol>
     </nav>
