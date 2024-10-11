@@ -1,3 +1,5 @@
+using Domains;
+
 namespace ElectronicsFix
 {
     public class Program
@@ -11,6 +13,8 @@ namespace ElectronicsFix
 
             // Add data bace
             builder.Services.AddDbContext<DepiProjectContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefultConnection")));
+
+            builder.Services.AddScoped<Icustomer, ClsCustomer>();
 
             var app = builder.Build();
 
