@@ -5,6 +5,7 @@ namespace Domains;
 
 public partial class Customer
 {
+
     public int CustomerId { get; set; }
 
     public string FirstName { get; set; } = null!;

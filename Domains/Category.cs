@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domains;
 
 public partial class Category
 {
+    [Required]
     public int CategoryId { get; set; }
+    [Required(ErrorMessage = "Category name is required.")]
+    [StringLength(100, ErrorMessage = "Category name can't be longer than 100 characters.")]
 
     public string CategoryName { get; set; } = null!;
 
     public DateTime? CreatedDate { get; set; }
 
     public string? CreatedBy { get; set; }
+    [Url(ErrorMessage = "Invalid image URL.")]
 
     public string? ImagePath { get; set; }
 
