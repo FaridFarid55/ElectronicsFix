@@ -9,10 +9,17 @@ namespace ElectronicsFix
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            // Add data bace
-            builder.Services.AddDbContext<DepiProjectContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefultConnection")));
+            // Add database
+            builder.Services.AddDbContext<DepiProjectContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ElectronicsFix")));
 
             var app = builder.Build();
+
+            // Ensure the database is created and apply migrations
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<DepiProjectContext>();
+                context.Database.Migrate();  // Apply pending migrations
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
