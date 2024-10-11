@@ -18,7 +18,7 @@ public partial class Category
     public string? CreatedBy { get; set; }
     [Url(ErrorMessage = "Invalid image URL.")]
 
-    public string? ImagePath { get; set; }
+    public string? ImageName { get; set; }
 
     public string? UpdatedBy { get; set; }
 
