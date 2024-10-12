@@ -33,7 +33,6 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Ui\" />
-    <Folder Include="Resources\" />
     <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\Admin\assets\css\" />
     <Folder Include="wwwroot\Admin\assets\js\" />

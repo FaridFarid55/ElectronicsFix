@@ -1,77 +1,55 @@
-﻿@model IEnumerable<Domains.Category>
+﻿@model IEnumerable<Category>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Categories";
 }
+<div class="page-header">
+    <h3 class="page-title"> Categories Management </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/Home">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Categories List</li>
+        </ol>
+    </nav>
+</div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OnDelete)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ParentCategory)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OnDelete)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParentCategory.CategoryName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="card">
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" asp-controller="Categories" asp-action="Create">Create New Category</a>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.ImagePath)</th>
+                        <th>@Html.DisplayNameFor(model => model.CategoryName)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="col-md-8">
+                                <img style="width:150px;height:auto; border-radius:inherit" src="~/Uploads/Categories/@item.ImagePath" />
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
+                            <td>
+                                <a asp-controller="Categories" asp-action="Edit" asp-route-id="@item.CategoryId" title="Edit" style="margin-right: 10px;">
+                                    <i class="fas fa-edit" style="font-size: 1.2em; color: #ffc107;"></i> <!-- Keep the color of the "warning" button -->
+                                </a>
+                                <a asp-controller="Categories" asp-action="Details" asp-route-id="@item.CategoryId" title="Details" style="margin-right: 10px;">
+                                    <i class="fas fa-info-circle" style="font-size: 1.2em; color: #17a2b8;"></i> <!-- Keep the color of the "info" button -->
+                                </a>
+                                <a asp-controller="Categories" asp-action="Delete" asp-route-id="@item.CategoryId" title="Delete">
+                                    <i class="fas fa-trash-alt" style="font-size: 1.2em; color: #dc3545;"></i> <!-- Keep the color of the "danger" button -->
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

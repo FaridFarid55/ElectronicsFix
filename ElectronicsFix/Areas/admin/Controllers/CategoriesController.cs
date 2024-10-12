@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using ElectronicsFix.Ui;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ElectronicsFix.Areas.admin.Controllers
 {
@@ -21,7 +22,7 @@ namespace ElectronicsFix.Areas.admin.Controllers
         {
             try
             {
-                var categories = await _context.Categories.Include(c => c.ParentCategory).ToListAsync();
+                var categories = await _context.Categories.Include(c => c.ParentCategory).Where(a => a.OnDelete == false).ToListAsync();
                 return View(categories);
             }
             catch (Exception ex)
@@ -59,7 +60,8 @@ namespace ElectronicsFix.Areas.admin.Controllers
             try
             {
                 ViewData["ParentCategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
-                return View();
+                var category = new Category();
+                return View(category);
             }
             catch (Exception ex)
             {
@@ -68,11 +70,17 @@ namespace ElectronicsFix.Areas.admin.Controllers
             }
         }
 
+
         // POST: admin/Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CreatedDate,CreatedBy,ImagePath,UpdatedBy,UpdatedDate,ParentCategoryId,OnDelete")] Category category)
+        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CreatedDate,CreatedBy,ImagePath,UpdatedBy,UpdatedDate,ParentCategoryId,OnDelete")] Category category, IFormFile File)
         {
+            if (File != null)
+            {
+                category.ImagePath = await ClsUiHelper.UploadImage(File, "Categories");
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -113,8 +121,13 @@ namespace ElectronicsFix.Areas.admin.Controllers
         // POST: admin/Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName,CreatedDate,CreatedBy,ImageName,UpdatedBy,UpdatedDate,ParentCategoryId,OnDelete")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName,CreatedDate,CreatedBy,ImageName,UpdatedBy,UpdatedDate,ParentCategoryId,OnDelete")] Category category, IFormFile File)
         {
+            if (File != null)
+            {
+                category.ImagePath = await ClsUiHelper.UploadImage(File, "Categories");
+            }
+
             if (id != category.CategoryId) return NotFound();
 
             if (ModelState.IsValid)
@@ -170,7 +183,8 @@ namespace ElectronicsFix.Areas.admin.Controllers
                 var category = await _context.Categories.FindAsync(id);
                 if (category != null)
                 {
-                    _context.Categories.Remove(category);
+                    category.UpdatedDate = DateTime.Now;
+                    _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
                 return RedirectToAction(nameof(Index));

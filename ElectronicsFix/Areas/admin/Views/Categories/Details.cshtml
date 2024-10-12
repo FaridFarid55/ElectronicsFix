@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Category Details";
-    Layout = "~/Areas/admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="page-header">
@@ -31,7 +30,7 @@
             <dd class="col-sm-9"> @Html.DisplayFor(model => model.CreatedBy) </dd>
 
             <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.ImagePath) </dt>
-            <dd class="col-sm-9"> @Html.DisplayFor(model => model.ImageName) </dd>
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.ImagePath) </dd>
 
             <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.UpdatedBy) </dt>
             <dd class="col-sm-9"> @Html.DisplayFor(model => model.UpdatedBy) </dd>
