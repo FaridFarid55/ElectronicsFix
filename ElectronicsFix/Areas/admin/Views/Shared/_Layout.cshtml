@@ -29,12 +29,12 @@
 <body>
     <div class="container-scroller">
         <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <nav  class="sidebar sidebar-offcanvas" id="sidebar">
             <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
                 <a class="sidebar-brand brand-logo" href="index.html"><img src="~/Admin/assets/images/logo.svg" alt="logo" /></a>
                 <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="~/Admin/assets/images/logo-mini.svg" alt="logo" /></a>
             </div>
-            <ul class="nav">
+            <ul style="position:fixed" class="nav">
                 <li class="nav-item profile">
                     <div class="profile-desc">
                         <div class="profile-pic">
@@ -96,6 +96,14 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
+                    <a class="nav-link" href="~/admin/Categories">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-playlist-play"></i>
+                        </span>
+                        <span class="menu-title">Categories</span>
+                    </a>
+                </li>
+                <li class="nav-item menu-items">
 
                     <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                         <span class="menu-icon">
@@ -113,11 +121,11 @@
                                     </span>
                                     <span class="menu-title">Engineers</span>
                                 </a>
-                                <a class="nav-link" href="/admin/Custmors">
+                                <a class="nav-link" href="/admin/Customers">
                                     <span class="menu-icon">
                                         <i class="mdi mdi-account-multiple"></i>
                                     </span>
-                                    <span class="menu-title">Custmors</span>
+                                    <span class="menu-title">Customers</span>
                                 </a>
                             </li>
                         </ul>

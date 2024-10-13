@@ -1,26 +1,27 @@
-﻿@model Engineer
+﻿@model Customer
 
 @{
-    ViewData["Title"] = "Edit Engineer";
+    ViewData["Title"] = "Edit Customer";
 }
 
 <div class="page-header">
-    <h3 class="page-title"> Edit Engineer </h3>
+    <h3 class="page-title"> Edit Customer </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin/Engineers/Index">Engineers List</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Engineer</li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Customers" asp-action="Index">Customers List</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Customer</li>
         </ol>
     </nav>
 </div>
 
 <div class="card">
     <div class="card-body">
-        <h4>Edit Engineer</h4>
+        <h4>Edit Customer</h4>
         <hr />
-        <form asp-controller="Engineers" asp-action="Edit">
+        <form asp-controller="Customers" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="EngineerId" />
+            <input type="hidden" asp-for="CustomerId" />
             <input type="hidden" asp-for="Password" />
             <input type="hidden" asp-for="ConfirmPassword" />
 
@@ -50,14 +51,13 @@
 
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" type="email" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
-          
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-controller="Engineers" asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+                <a asp-controller="Customers" asp-action="Index" class="btn btn-secondary ml-2">Cancel</a>
             </div>
         </form>
     </div>
