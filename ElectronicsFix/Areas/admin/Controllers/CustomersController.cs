@@ -12,8 +12,8 @@
         {
             _context = context;
         }
-
-        // Method to display all customers
+        //This  Method Customers
+        #region Method
         // GET: Customers
         public async Task<IActionResult> Index()
         {
@@ -256,5 +256,7 @@
             // Return JSON result (true if email is unique, false if taken)
             return Json(!emailExists);
         }
+
+        #endregion
     }
 }

@@ -1,108 +1,25 @@
-﻿@model Domains.Item
+﻿@model Item
 
 @{
     ViewData["Title"] = "Edit Item";
 }
 
-<style>
-    body {
-        background-color: #121212; /* لون خلفية داكن */
-        color: #e0e0e0; /* لون نص فاتح */
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .container {
-        width: 100%; /* جعل العرض 100% */
-        padding: 30px;
-        background-color: #1e1e1e; /* خلفية داكنة للعناصر */
-        border-radius: 0; /* إزالة الزوايا المستديرة */
-        box-shadow: none; /* إزالة الظل */
-    }
-
-    h2 {
-        color: #ffffff; /* لون النص أبيض */
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        color: #b0b0b0; /* لون النصوص فاتح */
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .form-control {
-        background-color: #2c2c2c; /* خلفية الحقول داكنة */
-        color: #ffffff; /* لون النص فاتح */
-        border: 1px solid #444; /* حدود داكنة */
-        border-radius: 5px;
-        padding: 12px;
-        width: 100%; /* جعل عرض الحقول 100% */
-        transition: border-color 0.3s;
-    }
-
-        .form-control:focus {
-            border-color: #80bdff; /* لون حدود عند التركيز */
-            outline: none;
-            background-color: #333; /* خلفية غامقة عند التركيز */
-            color: #ffffff; /* لون النص يبقى فاتحًا */
-        }
-
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 100%; /* جعل زر الإرسال 100% */
-        transition: background-color 0.3s;
-        font-weight: bold;
-    }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        border: none;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 100%; /* جعل زر العودة 100% */
-        margin-top: 10px;
-        transition: background-color 0.3s;
-        font-weight: bold;
-    }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-
-    .text-danger {
-        color: #ff5252; /* لون النص عند وجود خطأ */
-    }
-
-    .image-preview {
-        margin-top: 10px;
-        max-width: 100%;
-        height: auto;
-        display: none; /* إخفاء المعاينة في البداية */
-    }
-</style>
-
 <div class="container">
     <h2>Edit Item</h2>
 
-    <form asp-action="Edit" enctype="multipart/form-data">
+    <form method="post" asp-controller="Items" asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
         <input type="hidden" asp-for="ItemId" />
+        <input type="hidden" asp-for="ImagePath" />
+        <input type="hidden" asp-for="ItemDetails.CreatedDate" />
+        <input type="hidden" asp-for="ItemDetails.UpdatedDate" />
+        <input type="hidden" asp-for="OnDelete" />
+
 
         <div class="form-group">
             <label asp-for="ItemName"></label>
-            <input asp-for="ItemName" class="form-control" placeholder="Enter item name" />
+            <input asp-for="ItemName" class="form-control" placeholder="Enter Item Name" />
             <span asp-validation-for="ItemName" class="text-danger"></span>
         </div>
 
@@ -120,7 +37,7 @@
 
         <div class="form-group">
             <label asp-for="CategoryId"></label>
-            <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"))">
+            <select style="color:burlywood;" asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"))">
                 <option value="">Select Category</option>
             </select>
             <span asp-validation-for="CategoryId" class="text-danger"></span>
@@ -135,7 +52,8 @@
         <div class="form-group">
             <label asp-for="ImagePath"></label>
             <input type="file" asp-for="ImagePath" class="form-control" accept="image/*" onchange="previewImage(event)" />
-            <img id="imagePreview" class="image-preview" alt="Image Preview" />
+            <img id="imagePreview" class="image-preview" alt="Image Preview" style="width:65%; height250px;"
+                 src="~/Uploads/Items/@Model.ImagePath" />
             <span asp-validation-for="ImagePath" class="text-danger"></span>
         </div>
 
@@ -144,31 +62,32 @@
             <textarea asp-for="Description" class="form-control" placeholder="Enter description"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
-
         <div class="form-group">
-            <input type="submit" value="Save Changes" class="btn btn-primary" />
-        </div>
-
-        <div class="form-group">
-            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-controller="Items" asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
         </div>
     </form>
 </div>
 
-<script>
-    function previewImage(event) {
-        const imagePreview = document.getElementById('imagePreview');
-        const file = event.target.files[0];
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
+    <script>
+        function previewImage(event) {
+            const imagePreview = document.getElementById('imagePreview');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.style.display = 'none';
             }
-            reader.readAsDataURL(file);
-        } else {
-            imagePreview.style.display = 'none';
         }
-    }
-</script>
+    </script>
+}
+

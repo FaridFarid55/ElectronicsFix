@@ -13,8 +13,8 @@
             _context = context;
         }
 
-        // Method to display all engineers
-
+        //This Method Engineers
+        #region Method
         // GET: Engineers
         public async Task<IActionResult> Index()
         {
@@ -113,7 +113,6 @@
                 return View(engineer);
             }
         }
-
 
         // GET: Engineers/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -273,5 +272,6 @@
                 return Json(false);
             }
         }
+        #endregion
     }
 }
