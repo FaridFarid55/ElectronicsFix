@@ -1,0 +1,173 @@
+﻿@model Domains.Item
+
+@{
+    ViewData["Title"] = "Create Item";
+}
+
+<style>
+    body {
+        background-color: #121212; /* لون خلفية داكن */
+        color: #e0e0e0; /* لون نص فاتح */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+        width: 100%; /* جعل العرض 100% */
+        padding: 30px;
+        background-color: #1e1e1e; /* خلفية داكنة للعناصر */
+        border-radius: 0; /* إزالة الزوايا المستديرة */
+        box-shadow: none; /* إزالة الظل */
+    }
+
+    h2 {
+        color: #ffffff; /* لون النص أبيض */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        color: #b0b0b0; /* لون النصوص فاتح */
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        background-color: #2c2c2c; /* خلفية الحقول داكنة */
+        color: #ffffff; /* لون النص فاتح */
+        border: 1px solid #444; /* حدود داكنة */
+        border-radius: 5px;
+        padding: 12px;
+        width: 100%; /* جعل عرض الحقول 100% */
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff; /* لون حدود عند التركيز */
+            outline: none;
+            background-color: #333; /* خلفية غامقة عند التركيز */
+            color: #ffffff; /* لون النص يبقى فاتحًا */
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%; /* جعل زر الإرسال 100% */
+        transition: background-color 0.3s;
+        font-weight: bold;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%; /* جعل زر العودة 100% */
+        margin-top: 10px;
+        transition: background-color 0.3s;
+        font-weight: bold;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .text-danger {
+        color: #ff5252; /* لون النص عند وجود خطأ */
+    }
+
+    .image-preview {
+        margin-top: 10px;
+        max-width: 100%;
+        height: auto;
+        display: none; /* إخفاء المعاينة في البداية */
+    }
+</style>
+
+<div class="container">
+    <h2>Create New Item</h2>
+
+    <form asp-action="Create" enctype="multipart/form-data">
+        <!-- إضافة enctype -->
+        <div class="form-group">
+            <label asp-for="ItemName"></label>
+            <input asp-for="ItemName" class="form-control" placeholder="Enter item name" />
+            <span asp-validation-for="ItemName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SalesPrice"></label>
+            <input asp-for="SalesPrice" class="form-control" placeholder="Enter sales price" />
+            <span asp-validation-for="SalesPrice" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PurchasePrice"></label>
+            <input asp-for="PurchasePrice" class="form-control" placeholder="Enter purchase price" />
+            <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategoryId"></label>
+            <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"))">
+                <option value="">Select a category</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ItemType"></label>
+            <input asp-for="ItemType" class="form-control" placeholder="Enter item type" />
+            <span asp-validation-for="ItemType" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImagePath"></label>
+            <input type="file" asp-for="ImagePath" class="form-control" accept="image/*" onchange="previewImage(event)" />
+            <img id="imagePreview" class="image-preview" alt="Image Preview" />
+            <span asp-validation-for="ImagePath" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" placeholder="Enter description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+
+        <div class="form-group">
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function previewImage(event) {
+        const imagePreview = document.getElementById('imagePreview');
+        const file = event.target.files[0]; // الحصول على الملف
+
+        if (file) {
+            const reader = new FileReader(); // إنشاء قارئ الملفات
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result; // تعيين مصدر الصورة إلى المحتوى المقروء
+                imagePreview.style.display = 'block'; // إظهار صورة المعاينة
+            }
+            reader.readAsDataURL(file); // قراءة الملف كعنوان URL للبيانات
+        } else {
+            imagePreview.style.display = 'none'; // إخفاء صورة المعاينة إذا لم يكن هناك ملف
+        }
+    }
+</script>

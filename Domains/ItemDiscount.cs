@@ -1,19 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace Domains;
-
-public partial class ItemDiscount
+namespace Domains
 {
-    public int ItemDiscountId { get; set; }
+    public partial class ItemDiscount
+    {
+        public int ItemDiscountId { get; set; }
 
-    public int ItemId { get; set; }
+        [Required(ErrorMessage = "Item ID is required.")]
+        public int ItemId { get; set; }
 
-    public decimal? DiscountPercent { get; set; }
+        [Range(0, 100, ErrorMessage = "Discount percent must be between 0 and 100.")]
+        public decimal? DiscountPercent { get; set; }
 
-    public DateTime StartDate { get; set; }
+        [Required(ErrorMessage = "Start date is required.")]
+        public DateTime StartDate { get; set; }
 
-    public DateTime EndDate { get; set; }
+        [Required(ErrorMessage = "End date is required.")]
+        public DateTime EndDate { get; set; }
 
-    public virtual Item Item { get; set; } = null!;
+        public virtual Item Item { get; set; } = null!;
+    }
 }
