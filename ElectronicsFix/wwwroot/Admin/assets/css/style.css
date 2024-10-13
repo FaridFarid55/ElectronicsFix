@@ -106,6 +106,19 @@
 /* === Import template variables === */
 /*-------------------------------------------------------------------*/
 /* === SCSS Compass Functions === */
+
+input.form-control {
+    color: white;
+}
+
+input::placeholder {
+    color: white;
+}
+
+input.form-control:focus {
+    color: white;
+}
+
 @-moz-keyframes flash {
   0% {
     opacity: 1; }

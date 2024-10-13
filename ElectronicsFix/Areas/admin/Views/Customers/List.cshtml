@@ -1,0 +1,44 @@
+﻿@model List<Customer>
+<div class="card-body">
+    <h4 class="card-title">Order Status</h4>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-check form-check-muted m-0">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input">
+                                <i class="input-helper"></i>
+                            </label>
+                        </div>
+                    </th>
+                    <th> First Name </th>
+                    <th> Last Name </th>
+                    <th>  phone </th>
+                    <th> address </th>
+                    <th> Email </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+
+                    <tr>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Address</td>
+                        <td>@item.Email</td>
+                        <td>
+                            <div class="badge badge-outline-success">Approved</div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+                
+    </div>
+</div>
+  

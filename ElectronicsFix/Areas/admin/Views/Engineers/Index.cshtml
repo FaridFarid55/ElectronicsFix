@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Engineer>
+
+@{
+    ViewData["Title"] = " Engineer Management";
+}
+
+<div class="page-header">
+    <h3 class="page-title"> Engineer Management </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/Home/Index">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Engineers List</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" asp-controller="Engineers" asp-action="Create">Create New Engineer</a>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+                        <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Phone)</th>
+                        <th>@Html.DisplayNameFor(model => model.Address)</th>
+                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>
+                                <a asp-controller="Engineers" asp-action="Edit" asp-route-id="@item.EngineerId" title="Edit" style="margin-right: 10px;">
+                                    <i class="fas fa-edit" style="font-size: 1.2em; color: #ffc107;"></i> <!-- Keep the color of the "warning" button -->
+                                </a>
+                                <a asp-controller="Engineers" asp-action="Details" asp-route-id="@item.EngineerId" title="Details" style="margin-right: 10px;">
+                                    <i class="fas fa-info-circle" style="font-size: 1.2em; color: #17a2b8;"></i> <!-- Keep the color of the "info" button -->
+                                </a>
+                                <a asp-controller="Engineers" asp-action="Delete" asp-route-id="@item.EngineerId" title="Delete">
+                                    <i class="fas fa-trash-alt" style="font-size: 1.2em; color: #dc3545;"></i> <!-- Keep the color of the "danger" button -->
+                                </a>
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
