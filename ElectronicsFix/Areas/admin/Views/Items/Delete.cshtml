@@ -1,0 +1,27 @@
+﻿@model Domains.Item
+
+<h2>Delete Item</h2>
+
+<h4>Are you sure you want to delete this item?</h4>
+<div class="border p-4 rounded">
+    <h4>@Model.ItemName</h4>
+    <dl class="row">
+        <dt class="col-sm-3">Sales Price</dt>
+        <dd class="col-sm-9">@Model.SalesPrice</dd>
+
+        <dt class="col-sm-3">Purchase Price</dt>
+        <dd class="col-sm-9">@Model.PurchasePrice</dd>
+
+        <dt class="col-sm-3">Description</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete" method="post">
+    <!-- إزالة العلامة الزائدة هنا -->
+    <input type="hidden" asp-for="ItemId" /> <!-- تأكد من إرسال معرف العنصر للحذف -->
+    <div class="form-group">
+        <input type="submit" value="Delete" class="btn btn-danger" /> <!-- زر تأكيد الحذف -->
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a> <!-- زر لإلغاء الحذف والعودة إلى القائمة -->
+    </div>
+</form>

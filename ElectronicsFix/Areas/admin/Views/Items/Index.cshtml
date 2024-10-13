@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Domains.Item>
+
+@{
+    ViewData["Title"] = "Items List";
+}
+
+<h2>Items</h2>
+
+<!-- زر لإنشاء عنصر جديد في أقصى اليسار -->
+<div style="text-align: left; margin-bottom: 20px;">
+    <a asp-action="Create" class="btn btn-primary">Create New Item</a>
+</div>
+
+<!-- قائمة منسدلة لاختيار الفئة -->
+<div style="margin-bottom: 20px;">
+    <label for="categorySelect" style="color: #ffffff;">Select Category:</label>
+    <select id="categorySelect" class="form-select" style="width: 200px;" onchange="location = this.value;">
+        <option value="">All Categories</option>
+        @foreach (var category in ViewBag.Categories)
+        {
+            <option value="@Url.Action("Index", new { categoryId = category.CategoryId })">@category.CategoryName</option>
+        }
+    </select>
+</div>
+
+<script>
+    function filterCategories() {
+        var input = document.getElementById("searchCategory");
+        var filter = input.value.toLowerCase();
+        var items = document.getElementsByClassName("category-item");
+        for (var i = 0; i < items.length; i++) {
+            var txtValue = items[i].textContent || items[i].innerText;
+            items[i].style.display = txtValue.toLowerCase().indexOf(filter) > -1 ? "" : "none";
+        }
+    }
+</script>
+
+<!-- إضافة لفافة أفقية لتحسين العرض على الشاشات الأصغر -->
+<div style="overflow-x: auto;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item Image</th>
+                <th>Item Name</th>
+                <th>Category Name</th> <!-- إضافة عمود لاسم الفئة -->
+                <th>Price</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ImagePath))
+                        {
+                            <img src="@Url.Content(item.ImagePath)" alt="@item.ItemName" style="height: 70px; width: 70px; object-fit: cover; border-radius: 5px;" />
+                        }
+                        else
+                        {
+                            <span>No Image Available</span>
+                        }
+                    </td>
+
+                    <td>
+                        <span style="font-weight: bold; color: #ffffff;">@item.ItemName</span>
+                    </td>
+                    <td>
+                        <span style="color: #e0e0e0;">@item.Category?.CategoryName</span> <!-- عرض اسم الفئة -->
+                    </td>
+                    <td>
+                        <span style="font-weight: bold; color: #ffffff;">@item.SalesPrice</span>
+                    </td>
+                    <td>
+                        <span style="color: #e0e0e0;">@item.Description</span>
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a asp-action="Details" asp-route-id="@item.ItemId" class="btn btn-info btn-sm">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.ItemId" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.ItemId" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    table {
+        color: #ffffff; /* لون النص في الجدول */
+    }
+
+    th {
+        background-color: #333333; /* لون خلفية رأس الجدول */
+        color: #ffffff; /* لون نص رأس الجدول */
+    }
+
+    td {
+        background-color: #1e1e1e; /* لون خلفية خلايا الجدول */
+    }
+
+    tbody tr:hover {
+        background-color: #444444; /* تأثير عند التمرير فوق الصفوف */
+    }
+
+    /* تصغير حجم أزرار الإجراءات */
+    .btn-group {
+        display: flex;
+        gap: 5px; /* مساحة بين الأزرار */
+    }
+
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.875rem;
+    }
+</style>
