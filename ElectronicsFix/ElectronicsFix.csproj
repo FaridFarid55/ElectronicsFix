@@ -37,7 +37,7 @@
     <Folder Include="wwwroot\Admin\assets\css\" />
     <Folder Include="wwwroot\Admin\assets\js\" />
     <Folder Include="wwwroot\Admin\assets\images\" />
-    <Folder Include="wwwroot\Uploads\Item\" />
+    <Folder Include="wwwroot\Uploads\Items\" />
     <Folder Include="wwwroot\Uploads\Categories\" />
   </ItemGroup>
 
