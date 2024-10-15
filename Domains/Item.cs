@@ -1,3 +1,4 @@
+
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Domains
@@ -29,7 +30,7 @@ namespace Domains
 
         [Required(ErrorMessage = "Image path is required.")]
         [Display(Name = "Image Name")]
-        public string ImagePath { get; set; } = null!;
+        public string? ImagePath { get; set; }
 
         [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters.")]
         public string? Description { get; set; }
