@@ -7,7 +7,16 @@
 <div class="container">
     <h2>Edit Item</h2>
 
-    <form asp-action="Edit" enctype="multipart/form-data">
+    <form method="post" asp-controller="Items" asp-action="Create"
+          enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <input type="hidden" asp-for="ItemId" />
+        <input type="hidden" asp-for="ItemDetails.CreatedDate" />
+        <input type="hidden" asp-for="ItemDetails.UpdatedDate" />
+        <input type="hidden" asp-for="ImagePath" />
+        <input type="hidden" asp-for="OnDelete" />
+
         <div class="row">
             <div class="col-md-6">
                 <div class="card mb-3">
@@ -38,7 +47,7 @@
 
                         <div class="form-group">
                             <label asp-for="CategoryId"></label>
-                            <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"))">
+                            <select style="color:burlywood" asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"))">
                                 <option value="">Select a category</option>
                             </select>
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
@@ -52,14 +61,15 @@
 
                         <div class="form-group">
                             <label asp-for="ImagePath"></label>
-                            <input type="file" asp-for="ImagePath" class="form-control" accept="image/*" onchange="previewImage(event)" />
-                            <img id="imagePreview" class="image-preview" alt="Image Preview" style="width:65%; height:250px;" />
+                            <input type="file" name="File" asp-for="ImagePath" class="form-control" accept="image/*" onchange="previewImage(event)" />
+                            <img  id="imagePreview" class="image-preview" alt="Image Preview" style="width:65%; height:250px;padding-top:3px;"
+                                 src="~/Uploads/Items/@Model.ImagePath" />
                             <span asp-validation-for="ImagePath" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="Description"></label>
-                            <textarea asp-for="Description" class="form-control" placeholder="Enter description"></textarea>
+                            <textarea style="color:burlywood;" asp-for="Description" class="form-control" placeholder="Enter description"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                     </div>

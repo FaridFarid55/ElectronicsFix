@@ -1,36 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace Domains
+﻿namespace Domains
 {
     public partial class ItemDetail
     {
         public int ItemDetailsId { get; set; }
 
-        [Required(ErrorMessage = "GPU is required.")]
-        public string Gpu { get; set; } = null!;
+        public string? Gpu { get; set; }
 
-        [Required(ErrorMessage = "Hard disk is required.")]
-        public string HardDisk { get; set; } = null!;
+        public string? HardDisk { get; set; }
 
-        [Required(ErrorMessage = "Processor is required.")]
-        public string Processor { get; set; } = null!;
+        public string? Processor { get; set; }
 
-        [Required(ErrorMessage = "RAM size is required.")]
-        public string RamSize { get; set; } = null!;
+        [Range(1, int.MaxValue, ErrorMessage = "The Price Must be a  Number.")]
+        public string? RamSize { get; set; }
 
-        [Required(ErrorMessage = "Screen resolution is required.")]
-        public string ScreenResolution { get; set; } = null!;
+        [Range(1, int.MaxValue, ErrorMessage = "The Price Must be a  Number.")]
+        public string? ScreenResolution { get; set; }
 
-        [Required(ErrorMessage = "Screen size is required.")]
-        public string ScreenSize { get; set; } = null!;
+        [Range(1, int.MaxValue, ErrorMessage = "The Price Must be a  Number.")]
+        public string? ScreenSize { get; set; }
 
-        [Required(ErrorMessage = "Weight is required.")]
-        public string Weight { get; set; } = null!;
+        public string? Weight { get; set; }
 
-        [Required(ErrorMessage = "Operating system name is required.")]
-        public string OsName { get; set; } = null!;
+        public string? OsName { get; set; }
 
         public DateTime? CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
