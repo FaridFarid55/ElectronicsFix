@@ -96,7 +96,14 @@
             try
             {
                 // Upload image file if provided and assign to ImagePath property
-                if (File != null) item.ImagePath = await ClsUiHelper.UploadImage(File, "Items");
+                if (File != null)
+                {
+                    item.ImagePath = await ClsUiHelper.UploadImage(File, "Items");
+
+                    ModelState.Remove("ImagePath");
+                }
+
+
 
                 // Return the form if the model state is invalid
                 if (!ModelState.IsValid) return View(item);

@@ -12,7 +12,6 @@ public partial class Category
     public DateTime? CreatedDate { get; set; }
 
     public string? CreatedBy { get; set; }
-    [Url(ErrorMessage = "Invalid image URL.")]
 
     [Display(Name = "Image Name")]
     public string? ImagePath { get; set; }
