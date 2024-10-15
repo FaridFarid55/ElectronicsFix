@@ -80,16 +80,14 @@ namespace ElectronicsFix.Areas.admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Item item, ItemDetail itemDetail, IFormFile ImagePath)
         {
-            // تحقق من تحميل الصورة
-            if (ImagePath != null && ImagePath.Length > 0)
-            {
-                // Upload image
-                string imageName = Guid.NewGuid().ToString() + Path.GetExtension(ImagePath.FileName);
-                var fileStream = new FileStream(Path.Combine("wwwroot", "Uploads", "Items", imageName), FileMode.Create);
-                await ImagePath.CopyToAsync(fileStream);
-                item.ImagePath = imageName;
-            }
+                // Upload image file if provided and assign to ImagePath property
+                if (File != null)
+                {
+                    item.ImagePath = await ClsUiHelper.UploadImage(File, "Items");
 
+                    ModelState.Remove("ImagePath");
+                }
+                
             // تحقق من صحة البيانات
             if (!ModelState.IsValid)
             {

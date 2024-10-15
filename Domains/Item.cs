@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Domains
 {
@@ -36,6 +37,7 @@ namespace Domains
 
         public bool? OnDelete { get; set; }
 
+        [ValidateNever]
         public virtual Category Category { get; set; } = null!;
         public virtual ItemDetail? ItemDetails { get; set; }
         public virtual ICollection<ItemDiscount> ItemDiscounts { get; set; } = new List<ItemDiscount>();
