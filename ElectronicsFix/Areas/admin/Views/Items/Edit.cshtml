@@ -7,64 +7,126 @@
 <div class="container">
     <h2>Edit Item</h2>
 
-    <form method="post" asp-controller="Items" asp-action="Edit" enctype="multipart/form-data">
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>Edit Item</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Hidden input for Item ID -->
+                        <input type="hidden" asp-for="ItemId" />
 
-        <input type="hidden" asp-for="ItemId" />
-        <input type="hidden" asp-for="ImagePath" />
-        <input type="hidden" asp-for="ItemDetails.CreatedDate" />
-        <input type="hidden" asp-for="ItemDetails.UpdatedDate" />
-        <input type="hidden" asp-for="OnDelete" />
+                        <div class="form-group">
+                            <label asp-for="ItemName">Item Name</label>
+                            <input asp-for="ItemName" class="form-control" placeholder="Enter item name" />
+                            <span asp-validation-for="ItemName" class="text-danger"></span>
+                        </div>
 
+                        <div class="form-group">
+                            <label asp-for="SalesPrice">Sales Price</label>
+                            <input asp-for="SalesPrice" class="form-control" placeholder="Enter sales price" />
+                            <span asp-validation-for="SalesPrice" class="text-danger"></span>
+                        </div>
 
-        <div class="form-group">
-            <label asp-for="ItemName"></label>
-            <input asp-for="ItemName" class="form-control" placeholder="Enter Item Name" />
-            <span asp-validation-for="ItemName" class="text-danger"></span>
+                        <div class="form-group">
+                            <label asp-for="PurchasePrice">Purchase Price</label>
+                            <input asp-for="PurchasePrice" class="form-control" placeholder="Enter purchase price" />
+                            <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CategoryId"></label>
+                            <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"))">
+                                <option value="">Select a category</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemType">Item Type</label>
+                            <input asp-for="ItemType" class="form-control" placeholder="Enter item type" />
+                            <span asp-validation-for="ItemType" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ImagePath"></label>
+                            <input type="file" asp-for="ImagePath" class="form-control" accept="image/*" onchange="previewImage(event)" />
+                            <img id="imagePreview" class="image-preview" alt="Image Preview" style="width:65%; height:250px;" />
+                            <span asp-validation-for="ImagePath" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control" placeholder="Enter description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>Edit Item Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="ItemDetails.Gpu">GPU</label>
+                            <input asp-for="ItemDetails.Gpu" class="form-control" placeholder="Enter GPU" />
+                            <span asp-validation-for="ItemDetails.Gpu" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemDetails.HardDisk">Hard Disk</label>
+                            <input asp-for="ItemDetails.HardDisk" class="form-control" placeholder="Enter Hard Disk" />
+                            <span asp-validation-for="ItemDetails.HardDisk" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemDetails.Processor">Processor</label>
+                            <input asp-for="ItemDetails.Processor" class="form-control" placeholder="Enter Processor" />
+                            <span asp-validation-for="ItemDetails.Processor" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemDetails.RamSize">RAM Size</label>
+                            <input asp-for="ItemDetails.RamSize" class="form-control" placeholder="Enter RAM Size" />
+                            <span asp-validation-for="ItemDetails.RamSize" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemDetails.ScreenResolution">Screen Resolution</label>
+                            <input asp-for="ItemDetails.ScreenResolution" class="form-control" placeholder="Enter Screen Resolution" />
+                            <span asp-validation-for="ItemDetails.ScreenResolution" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemDetails.ScreenSize">Screen Size</label>
+                            <input asp-for="ItemDetails.ScreenSize" class="form-control" placeholder="Enter Screen Size" />
+                            <span asp-validation-for="ItemDetails.ScreenSize" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemDetails.Weight">Weight</label>
+                            <input asp-for="ItemDetails.Weight" class="form-control" placeholder="Enter Weight" />
+                            <span asp-validation-for="ItemDetails.Weight" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemDetails.OsName">Operating System</label>
+                            <input asp-for="ItemDetails.OsName" class="form-control" placeholder="Enter Operating System" />
+                            <span asp-validation-for="ItemDetails.OsName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
-            <label asp-for="SalesPrice"></label>
-            <input asp-for="SalesPrice" class="form-control" placeholder="Enter sales price" />
-            <span asp-validation-for="SalesPrice" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="PurchasePrice"></label>
-            <input asp-for="PurchasePrice" class="form-control" placeholder="Enter purchase price" />
-            <span asp-validation-for="PurchasePrice" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="CategoryId"></label>
-            <select style="color:burlywood;" asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"))">
-                <option value="">Select Category</option>
-            </select>
-            <span asp-validation-for="CategoryId" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="ItemType"></label>
-            <input asp-for="ItemType" class="form-control" placeholder="Enter item type" />
-            <span asp-validation-for="ItemType" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="ImagePath"></label>
-            <input type="file" asp-for="ImagePath" class="form-control" accept="image/*" onchange="previewImage(event)" />
-            <img id="imagePreview" class="image-preview" alt="Image Preview" style="width:65%; height250px;"
-                 src="~/Uploads/Items/@Model.ImagePath" />
-            <span asp-validation-for="ImagePath" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Description"></label>
-            <textarea asp-for="Description" class="form-control" placeholder="Enter description"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
-            <a asp-controller="Items" asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+            <input type="submit" value="Save Changes" class="btn btn-primary" />
+            <a asp-controller="Items" asp-action="Index" class="btn btn-secondary ml-2">Cancel</a>
         </div>
     </form>
 </div>
@@ -90,4 +152,3 @@
         }
     </script>
 }
-

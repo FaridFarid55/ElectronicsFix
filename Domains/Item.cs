@@ -1,4 +1,6 @@
-﻿namespace Domains
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Domains
 {
     public partial class Item
     {
@@ -27,7 +29,7 @@
 
         [Required(ErrorMessage = "Image path is required.")]
         [Display(Name = "Image Name")]
-        public string ImagePath { get; set; } = null!;
+        public string? ImagePath { get; set; }
 
         [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters.")]
         public string? Description { get; set; }
