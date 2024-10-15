@@ -18,15 +18,15 @@
             try
             {
                 // Load categories that are not marked for deletion
-                ViewBag.Categories = await _context.Categories.Where(a => !a.OnDelete).ToListAsync();
+                ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
 
                 // Load items based on category filter
                 var items = categoryId == null
-                    ? await _context.Items.Include(i => i.ItemDetails).Include(i => i.Category).Where(i => !i.OnDelete).ToListAsync()
+                    ? await _context.Items.Include(i => i.ItemDetails).Include(i => i.Category).Where(i => i.OnDelete == false).ToListAsync()
                     : await _context.Items
                         .Include(i => i.ItemDetails)
                         .Include(i => i.Category)
-                        .Where(i => i.CategoryId == categoryId && !i.OnDelete)
+                        .Where(i => i.CategoryId == categoryId && i.OnDelete == false)
                         .ToListAsync();
 
                 return View(items);
@@ -67,7 +67,7 @@
         public async Task<IActionResult> Create()
         {
             // Load categories for the dropdown
-            ViewBag.Categories = await _context.Categories.Where(a => !a.OnDelete).ToListAsync();
+            ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
             return View();
         }
 
@@ -86,7 +86,7 @@
             // Validate the data
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = await _context.Categories.Where(a => !a.OnDelete).ToListAsync();
+                ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
                 return View(item);
             }
 
@@ -108,7 +108,7 @@
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"An error occurred while creating the item: {ex.Message}");
-                ViewBag.Categories = await _context.Categories.Where(a => !a.OnDelete).ToListAsync();
+                ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
                 return View(item);
             }
         }
