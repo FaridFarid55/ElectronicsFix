@@ -15,9 +15,9 @@ namespace ElectronicsFix.Areas.admin.Controllers
             _context = context;
         }
 
-        // Method to display all categories
+        //This Method Categories
 
-        // Asynchronous action to get a list of categories.
+        #region Method
         // GET: admin/Categories
         public async Task<IActionResult> Index()
         {
@@ -77,13 +77,13 @@ namespace ElectronicsFix.Areas.admin.Controllers
         // POST: admin/Categories/Create
         [HttpPost] // Specify that this action responds to POST requests.
         [ValidateAntiForgeryToken] // Protect against CSRF attacks.
-        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CreatedDate,CreatedBy,ImagePath,UpdatedBy,UpdatedDate,ParentCategoryId,OnDelete")] Category category, IFormFile File) // Asynchronous action to create a new category.
+        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CreatedDate,CreatedBy,ImagePath,UpdatedBy,UpdatedDate,ParentCategoryId,OnDelete")] Category category, IFormFile File)
         {
             // check image
             if (File != null) category.ImagePath = await ClsUiHelper.UploadImage(File, "Categories");
 
             // Check if the model state is valid.
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -101,7 +101,7 @@ namespace ElectronicsFix.Areas.admin.Controllers
             return View(category);
         }
 
-        // Asynchronous action to edit a specific category by id.
+
         // GET: admin/Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -127,7 +127,7 @@ namespace ElectronicsFix.Areas.admin.Controllers
             }
         }
 
-        // Asynchronous action to update an existing category.
+
         // POST: admin/Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -185,7 +185,6 @@ namespace ElectronicsFix.Areas.admin.Controllers
             }
         }
 
-        // Asynchronous action to confirm deletion of a category.
         // POST: admin/Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -215,5 +214,6 @@ namespace ElectronicsFix.Areas.admin.Controllers
         {
             return _context.Categories.Any(e => e.CategoryId == id); // Return true if the category exists; otherwise, false.
         }
+        #endregion
     }
 }

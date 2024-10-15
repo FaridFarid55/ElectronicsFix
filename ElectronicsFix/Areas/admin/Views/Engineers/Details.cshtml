@@ -8,7 +8,7 @@
     <h3 class="page-title"> Engineer Details </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin/Engineers/Index">Engineers List</a></li>
+            <li class="breadcrumb-item"><a href="/admin/Engineers">Engineers List</a></li>
             <li class="breadcrumb-item active" aria-current="page">Engineer Details</li>
         </ol>
     </nav>
@@ -32,7 +32,10 @@
             <dd class="col-sm-9"> @Html.DisplayFor(model => model.Address) </dd>
 
             <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.Email) </dt>
-            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Email) </dd>           
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Email) </dd>
+
+            <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.Password) </dt>
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Password) </dd>
         </dl>
 
         <div class="form-group">

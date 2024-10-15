@@ -1,72 +1,74 @@
-﻿<h2>@Model.ItemName Details</h2>
-
-<div>
-    <h4>Item Details</h4>
-    <dl class="row">
-        <dt class="col-sm-3">Sales Price</dt>
-        <dd class="col-sm-9">@Model.SalesPrice</dd>
-
-        <dt class="col-sm-3">Purchase Price</dt>
-        <dd class="col-sm-9">@Model.PurchasePrice</dd>
-
-        <dt class="col-sm-3">Category</dt>
-        <dd class="col-sm-9">
-            @if (Model.Category != null)
-            {
-                @Model.Category.CategoryName
-            }
-            else
-            {
-                <span class="text-danger">Category not assigned</span>
-            }
-        </dd>
-
-        <dt class="col-sm-3">Description</dt>
-        <dd class="col-sm-9">@Model.Description</dd>
-
-        <!-- ItemDetails -->
-        <dt class="col-sm-3">GPU</dt>
-        <dd class="col-sm-9">@Model.ItemDetails?.Gpu ?? "N/A"</dd>
-
-        <dt class="col-sm-3">Hard Disk</dt>
-        <dd class="col-sm-9">@Model.ItemDetails?.HardDisk ?? "N/A"</dd>
-
-        <dt class="col-sm-3">Processor</dt>
-        <dd class="col-sm-9">@Model.ItemDetails?.Processor ?? "N/A"</dd>
-
-        <dt class="col-sm-3">RAM Size</dt>
-        <dd class="col-sm-9">@Model.ItemDetails?.RamSize ?? "N/A"</dd>
-
-        <dt class="col-sm-3">Screen Resolution</dt>
-        <dd class="col-sm-9">@Model.ItemDetails?.ScreenResolution ?? "N/A"</dd>
-
-        <dt class="col-sm-3">Screen Size</dt>
-        <dd class="col-sm-9">@Model.ItemDetails?.ScreenSize ?? "N/A"</dd>
-
-        <dt class="col-sm-3">Weight</dt>
-        <dd class="col-sm-9">@Model.ItemDetails?.Weight ?? "N/A"</dd>
-
-        <dt class="col-sm-3">Operating System</dt>
-        <dd class="col-sm-9">@Model.ItemDetails?.OsName ?? "N/A"</dd>
-    </dl>
+﻿@model Item
+@{
+    ViewData["Title"] = "Item Details";
+}
+<div class="page-header">
+    <h3 class="page-title"> Engineer Details </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/Items">Items List</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Item Details</li>
+        </ol>
+    </nav>
 </div>
+<div class="card">
+    <div class="card-body">
+        <h4>Item Information</h4>
+        <hr />
 
-<!-- تعديل زر Back to List -->
-<div style="text-align: left; margin-top: 20px;">
-    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        <h4>@Model.ItemName Details</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">Sales Price</dt>
+            <dd class="col-sm-9">$@Model.SalesPrice</dd>
+            <hr />
+            <dt class="col-sm-3">Purchase Price</dt>
+            <dd class="col-sm-9">$@Model.PurchasePrice</dd>
+            <hr />
+            <dt class="col-sm-3">Category</dt>
+            <dd class="col-sm-9">
+                @if (Model.Category != null)
+                {
+                    @Model.Category.CategoryName
+                }
+                else
+                {
+                    <span class="text-danger">Category not assigned</span>
+                }
+            </dd>
+            <hr />
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@Model.Description</dd>
+            <hr />
+            <!-- ItemDetails -->
+            <dt class="col-sm-3">GPU</dt>
+            <dd class="col-sm-9">@Model.ItemDetails?.Gpu ?? "N/A"</dd>
+            <hr />
+            <dt class="col-sm-3">Hard Disk</dt>
+            <dd class="col-sm-9">@Model.ItemDetails?.HardDisk ?? "N/A"</dd>
+            <hr />
+            <dt class="col-sm-3">Processor</dt>
+            <dd class="col-sm-9">@Model.ItemDetails?.Processor ?? "N/A"</dd>
+            <hr />
+            <dt class="col-sm-3">RAM Size</dt>
+            <dd class="col-sm-9">@Model.ItemDetails?.RamSize ?? "N/A"</dd>
+            <hr />
+            <dt class="col-sm-3">Screen Resolution</dt>
+            <dd class="col-sm-9">@Model.ItemDetails?.ScreenResolution ?? "N/A"</dd>
+            <hr />
+            <dt class="col-sm-3">Screen Size</dt>
+            <dd class="col-sm-9">@Model.ItemDetails?.ScreenSize ?? "N/A"</dd>
+            <hr />
+            <dt class="col-sm-3">Weight</dt>
+            <dd class="col-sm-9">@Model.ItemDetails?.Weight ?? "N/A"</dd>
+            <hr />
+            <dt class="col-sm-3">Operating System</dt>
+            <dd class="col-sm-9">@Model.ItemDetails?.OsName ?? "N/A"</dd>
+        </dl>
+
+        <div class="form-group">
+            <a asp-controller="Items" asp-action="Edit" asp-route-id="@Model?.ItemId" class="btn btn-primary">Edit</a>
+            <a asp-controller="Items" asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
 </div>
-
-<style>
-    .btn-sm {
-        padding: 5px 10px; /* تصغير حجم الزر */
-        font-size: 0.875rem; /* تقليل حجم الخط */
-    }
-
-    /* محاذاة الزر إلى الأسفل واليسار */
-    div[style*="text-align: left"] {
-        position: relative;
-        bottom: 0;
-        left: 0;
-        margin-left: 0;
-    }
-</style>

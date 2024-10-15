@@ -1,4 +1,4 @@
-﻿@model Domains.Category
+﻿@model Category
 
 @{
     ViewData["Title"] = "Category Details";
@@ -38,11 +38,13 @@
             <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.UpdatedDate) </dt>
             <dd class="col-sm-9"> @Html.DisplayFor(model => model.UpdatedDate) </dd>
 
+            @*
             <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.OnDelete) </dt>
             <dd class="col-sm-9"> @Html.DisplayFor(model => model.OnDelete) </dd>
-
+           
             <dt class="col-sm-3"> @Html.DisplayNameFor(model => model.ParentCategory.CategoryName) </dt>
             <dd class="col-sm-9"> @Html.DisplayFor(model => model.ParentCategory.CategoryName) </dd>
+            *@
         </dl>
 
         <div class="form-group">
