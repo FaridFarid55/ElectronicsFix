@@ -1,6 +1,6 @@
 using Microsoft.JSInterop;
 
-namespace RazorClassLibrary1
+namespace Bl
 {
     // This class provides an example of how JavaScript functionality can be wrapped
     // in a .NET class for easy consumption. The associated JavaScript module is
@@ -16,7 +16,7 @@ namespace RazorClassLibrary1
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/RazorClassLibrary1/exampleJsInterop.js").AsTask());
+                "import", "./_content/Bl/exampleJsInterop.js").AsTask());
         }
 
         public async ValueTask<string> Prompt(string message)

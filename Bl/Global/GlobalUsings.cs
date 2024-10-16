@@ -4,4 +4,3 @@
 //global using ElectronicsFix.Models;
 global using Domains;
 global using Microsoft.EntityFrameworkCore;
-

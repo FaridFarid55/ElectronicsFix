@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicsFix", "Electroni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domains", "Domains\Domains.csproj", "{31422466-7714-4C88-AB8C-67E0B942C32A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bl", "RazorClassLibrary1\Bl.csproj", "{5DA40ACF-7114-4A44-9CAB-BB3C3584063C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bl", "Bl\Bl.csproj", "{910B60C9-72DD-4B31-BE54-71BCC22ECB43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{31422466-7714-4C88-AB8C-67E0B942C32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31422466-7714-4C88-AB8C-67E0B942C32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31422466-7714-4C88-AB8C-67E0B942C32A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DA40ACF-7114-4A44-9CAB-BB3C3584063C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DA40ACF-7114-4A44-9CAB-BB3C3584063C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DA40ACF-7114-4A44-9CAB-BB3C3584063C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DA40ACF-7114-4A44-9CAB-BB3C3584063C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{910B60C9-72DD-4B31-BE54-71BCC22ECB43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{910B60C9-72DD-4B31-BE54-71BCC22ECB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{910B60C9-72DD-4B31-BE54-71BCC22ECB43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{910B60C9-72DD-4B31-BE54-71BCC22ECB43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

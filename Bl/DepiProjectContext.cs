@@ -1,5 +1,4 @@
-﻿
-namespace Bl;
+﻿namespace Bl;
 
 public partial class DepiProjectContext : DbContext
 {
