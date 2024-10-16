@@ -10,7 +10,7 @@ namespace ElectronicsFix
             builder.Services.AddControllersWithViews();
 
             // Add database
-            builder.Services.AddDbContext<DepiProjectContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ElectronicsFix")));
+            builder.Services.AddDbContext<DepiProjectContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
