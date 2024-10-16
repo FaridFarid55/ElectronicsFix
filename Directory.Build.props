@@ -1,6 +1,0 @@
-<Project>
-  <ItemGroup>
-    <!-- تضمين ملف GlobalUsings.cs في جميع المشاريع -->
-    <Compile Include="Global/GlobalUsings.cs" />
-  </ItemGroup>
-</Project>
