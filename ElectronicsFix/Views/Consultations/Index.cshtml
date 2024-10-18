@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Consultation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container">
+    <h1>My Consultations</h1>
+    <p>
+        <a class="primary-btn" asp-controller="Consultations" asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.StartDate)</th>
+                <th>@Html.DisplayNameFor(model => model.EndDate)</th>
+                <th>@Html.DisplayNameFor(model => model.Status)</th>
+                <th>@Html.DisplayNameFor(model => model.IssueDescription)</th>
+                <th>@Html.DisplayNameFor(model => model.ConsultationCost)</th>
+                <th>@Html.DisplayNameFor(model => model.Customer)</th>
+                <th>@Html.DisplayNameFor(model => model.Engineer)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                    <td>
+                        @if (item.EndDate == null)
+                        {
+                            @* Display "Not Yet" if EndDate is null *@
+                            <span>Not Yet</span>
+                        }
+                        else
+                        {
+                            @* Otherwise, display the EndDate *@
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IssueDescription)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ConsultationCost)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Customer.FirstName) @Html.DisplayFor(modelItem => item.Customer.LastName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Engineer.FirstName) @Html.DisplayFor(modelItem => item.Engineer.LastName)</td>
+                    <td>
+                        <a asp-controller="Consultations" asp-action="Edit" asp-route-id="@item.ConsultationId" title="Edit">Edit</a> |
+                        <a asp-controller="Consultations" asp-action="Details" asp-route-id="@item.ConsultationId" title="Details">Details</a> |
+                        <a asp-controller="Consultations" asp-action="Delete" asp-route-id="@item.ConsultationId" title="Delete">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

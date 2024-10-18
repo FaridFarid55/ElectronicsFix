@@ -1,12 +1,15 @@
 ﻿namespace Domains;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 public partial class Consultation
 {
     public int ConsultationId { get; set; }
 
+    [Display(Name = "Engineer")]
     [Required(ErrorMessage = "Engineer is required.")]
     public int EngineerId { get; set; }
 
+    [Display(Name = "Customer")]
     [Required(ErrorMessage = "Customer is required.")]
     public int CustomerId { get; set; }
 
@@ -19,8 +22,7 @@ public partial class Consultation
     [Display(Name = "End Date")]
     public DateTime? EndDate { get; set; }
 
-    [Required(ErrorMessage = "Status is required.")]
-    [StringLength(50, ErrorMessage = "Status cannot exceed 50 characters.")]
+    [ValidateNever]
     public string Status { get; set; } = null!;
 
     [StringLength(1000, ErrorMessage = "Issue description cannot exceed 1000 characters.")]
@@ -32,7 +34,8 @@ public partial class Consultation
     [Display(Name = "Consultation Cost")]
     public decimal ConsultationCost { get; set; }
 
+    [ValidateNever]
     public virtual Customer Customer { get; set; } = null!;
-
+    [ValidateNever]
     public virtual Engineer Engineer { get; set; } = null!;
 }
