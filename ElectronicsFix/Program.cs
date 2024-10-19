@@ -12,6 +12,17 @@ namespace ElectronicsFix
             // Add database
             builder.Services.AddDbContext<DepiProjectContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            // add object
+            builder.Services.AddScoped<ISettings, ClsSettings>();
+            builder.Services.AddScoped<ICustomers, ClsCustomers>();
+
+            // add filter
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<LayoutDataFilter>();
+            });
+
+
             var app = builder.Build();
 
             // Ensure the database is created and apply migrations

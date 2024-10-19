@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\image\**" />
+    <Content Remove="wwwroot\image\**" />
+    <EmbeddedResource Remove="wwwroot\image\**" />
+    <None Remove="wwwroot\image\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Areas\admin\Views\Shared\_Layout.cshtml.css" />
   </ItemGroup>
 
@@ -31,20 +38,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Ui\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\Admin\assets\css\" />
     <Folder Include="wwwroot\Admin\assets\js\" />
     <Folder Include="wwwroot\Admin\assets\images\" />
     <Folder Include="wwwroot\font\" />
-    <Folder Include="wwwroot\image\" />
     <Folder Include="wwwroot\Uploads\Items\" />
     <Folder Include="wwwroot\Uploads\Categories\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>

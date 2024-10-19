@@ -26,6 +26,8 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="~/css/style.css" />
 
+    <link rel="shortcut icon" href="/img/Logo.png" />
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -36,14 +38,17 @@
 
 </head>
 <body>
+    @{
+        var item = ViewData["LayoutViewModel"] as LayoutViewModel;
+    }
     <!-- HEADER -->
     <header>
         <!-- TOP HEADER -->
         <div id="top-header">
             <div class="container">
                 <ul class="header-links pull-left">
-                    <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                    <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+                    <li><a href="#"><i class="fa fa-phone"></i>@item.Phone</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i>@item.Mail</a></li>
                     <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
                 </ul>
                 <ul class="header-links pull-right">
@@ -63,7 +68,7 @@
                     <div class="col-md-3">
                         <div class="header-logo">
                             <a href="#" class="logo">
-                                <img src="./img/logo.png" alt="">
+                                <img style="width:100px;height:100px;" src="~/img/@item.LogoUrl" alt="">
                             </a>
                         </div>
                     </div>
@@ -191,11 +196,11 @@
                     <div class="col-md-3 col-xs-6">
                         <div class="footer">
                             <h3 class="footer-title">About Us</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+                            <p>@item.Description</p>
                             <ul class="footer-links">
                                 <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-                                <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-                                <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+                                <li><a href="#"><i class="fa fa-phone"></i>@item.Phone</a></li>
+                                <li><a href="#"><i class="fa fa-envelope-o"></i>@item.Mail</a></li>
                             </ul>
                         </div>
                     </div>
@@ -260,9 +265,7 @@
                             <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
                             <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
                         </ul>
-                        <span class="copyright">
-                            <a target="_blank" href="https://www.templateshub.net">Templates Hub</a>
-                        </span>
+                        <span style="color:burlywood" class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright : @item.Copyright &copy;.</span>
                     </div>
                 </div>
                 <!-- /row -->

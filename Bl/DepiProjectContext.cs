@@ -30,6 +30,7 @@ public partial class DepiProjectContext : DbContext
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
+    public virtual DbSet<TbSetting> TbSettings { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
