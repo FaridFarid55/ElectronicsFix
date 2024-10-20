@@ -1,0 +1,156 @@
+﻿@model TbSetting
+@{
+    ViewData["Title"] = "Setting Website";
+}
+<style>
+    .int {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px; /* Reduce margin */
+        padding: 10px; /* Reduce padding */
+        border-bottom: 1px solid #444;
+    }
+
+        .int h3 {
+            width: 180px; /* Reduce width */
+            margin: 0;
+            font-weight: bold;
+            color: #fff;
+            font-size: 1rem; /* Reduce font size */
+        }
+
+        .int h5 {
+            margin: 0;
+            flex: 1;
+            text-align: left;
+            color: #ddd;
+            font-size: 0.9rem; /* Smaller font */
+        }
+
+    .card {
+        background-color: #2b2b2b;
+        border-radius: 8px; /* Slightly smaller border-radius */
+    }
+
+    .card-body {
+        padding: 20px; /* Reduce padding */
+    }
+
+    .card-title {
+        font-size: 1.2rem; /* Smaller font size */
+        color: #fff;
+    }
+
+    .page-title {
+        font-size: 1.8rem; /* Slightly smaller title */
+        color: #fff;
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        color: #ddd;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #555;
+    }
+
+    img {
+        border-radius: 8px; /* Smaller border-radius for images */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow */
+    }
+
+    .btn {
+        margin-bottom: 15px; /* Smaller margin */
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Settings</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/Home/Index">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Settings</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <a asp-controller="Settings" asp-action="Edit_Website" asp-route-Id="@Model.ID"
+                       class="btn btn-success btn-fw">Edit</a>
+                    <hr />
+                    <!-- Logo -->
+                    <div class="int">
+                        <h3 class="card-title">Logo Url:</h3>
+                        <img src="~/img/@Model.Logo" style="height:120px;margin-left:100px" />
+                    </div>
+                    <hr />
+                    <!-- Mail -->
+                    <div class="int">
+                        <h3 class="card-title">Mail :</h3>
+                        <h5>@Model.Mail</h5>
+                    </div>
+                    <hr />
+                    <!-- Phone -->
+                    <div class="int">
+                        <h3 class="card-title">Phone :</h3>
+                        <h5>@Model.Phone</h5>
+                    </div>
+                    <hr />
+                    <!-- Copyright -->
+                    <div class="int">
+                        <h3 class="card-title">Copyright :</h3>
+                        <h5>@Model.Copyright &copy;</h5>
+                    </div>
+                    <hr />
+                    <!-- Description -->
+                    <div class="int">
+                        <h3 class="card-title">Description :</h3>
+                        <h5>@Model.Description</h5>
+                    </div>
+                    <hr />
+                    <!-- Facebook_Link -->
+                    <div class="int">
+                        <h3 class="card-title">Facebook Link :</h3>
+                        <h5>@Model.Facebook_Link</h5>
+                    </div>
+                    <hr />
+                    <!-- Google_Link -->
+                    <div class="int">
+                        <h3 class="card-title">Google Link :</h3>
+                        <h5>@Model.Googol_Link</h5>
+                    </div>
+                    <hr />
+                    <!-- Twitter_Link -->
+                    <div class="int">
+                        <h3 class="card-title">Twitter Link :</h3>
+                        <h5>@Model.Twitter_Link</h5>
+                    </div>
+                    <hr />
+                    <!-- Instagram_Link -->
+                    <div class="int">
+                        <h3 class="card-title">Instagram Link :</h3>
+                        <h5>@Model.Instagram_Link</h5>
+                    </div>
+                    <hr />
+                    <!-- LinkedIn_Link -->
+                    <div class="int">
+                        <h3 class="card-title">LinkedIn Link :</h3>
+                        <h5>@Model.LinkedIn_Link</h5>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

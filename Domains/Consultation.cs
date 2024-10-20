@@ -1,8 +1,10 @@
+
 ﻿namespace Domains;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 public partial class Consultation
 {
+    [Key]
     public int ConsultationId { get; set; }
 
     [Display(Name = "Engineer")]

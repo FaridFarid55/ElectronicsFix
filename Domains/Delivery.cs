@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Domains;
+﻿namespace Domains;
 
 public partial class Delivery
 {
+    [Key]
     public int DeliveryId { get; set; }
 
     public int OrderId { get; set; }

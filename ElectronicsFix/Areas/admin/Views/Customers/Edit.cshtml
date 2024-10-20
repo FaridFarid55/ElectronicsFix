@@ -22,8 +22,10 @@
         <form asp-controller="Customers" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CustomerId" />
+            @*
             <input type="hidden" asp-for="Password" />
             <input type="hidden" asp-for="ConfirmPassword" />
+            *@
 
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>

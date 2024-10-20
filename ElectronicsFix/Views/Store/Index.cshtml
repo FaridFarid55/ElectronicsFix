@@ -1,0 +1,364 @@
+﻿@model ElectronicsFix.Models.PageItemsViewModel;
+
+@{
+	ViewData["Title"] = "Store";
+
+	IEnumerable<string> types = ViewBag.Types;     // represent Items.ItemType
+	IEnumerable<string> brands = ViewBag.Brands;   // represent Categories.CategoryName
+
+	var Items = Model.StoreItemsViewModel.Items.ToList();
+	var ItemDetails = Model.StoreItemsViewModel.ItemDetails.ToList();
+	var ItemDiscounts = Model.StoreItemsViewModel.ItemDiscounts.ToList();
+	var Categories = Model.StoreItemsViewModel.Categories.ToList();
+
+	var PageNumber = Model.PageNumber;
+	var TotalPages = Model.TotalPages;
+	var Category = Model.Category;  // represent Items.ItemType
+	var Brand = Model.Brand;        // represent Categories.CategoryName
+	var Sort = Model.Sort;
+
+	var storeItems = Items.Select(item => new
+	{
+		ItemId = item.ItemId,
+		ItemName = item.ItemName,
+		SalesPrice = item.SalesPrice,
+		ItemType = item.ItemType,
+		ItemDetailsId = item.ItemDetailsId,
+		ImagePath = item.ImagePath,
+		Description = item.Description,
+		CategoryId = item.CategoryId,
+		CategoryName = Categories
+			.Where(cat => cat.CategoryId == item.CategoryId)
+			.Select(cat => cat.CategoryName).FirstOrDefault("Others"),
+		CreatedDate = ItemDetails
+			.Where(itemDetail => itemDetail.ItemDetailsId == item.ItemDetailsId)
+			.Select(itemdetail => itemdetail.CreatedDate).FirstOrDefault(new DateTime(2024, 10, 1, 23, 59, 59)),
+		DiscountPercent = ItemDiscounts
+			.Where(itemDiscount => itemDiscount.ItemId == item.ItemId)
+			.Select(itemDiscount => itemDiscount.DiscountPercent).FirstOrDefault(0)
+
+	}).OrderBy(item => item.ItemId).ToList();
+}
+
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!-- ASIDE -->
+			<div id="aside" class="col-md-3">
+				<!-- aside Widget -->
+				<div class="aside">
+					<h3 class="aside-title">Categories</h3>
+					<div class="checkbox-filter">
+						<div>
+							<label  for="category-1">
+								<span style="margin-right:2rem"></span>
+								@if (Category == "All Categories")
+								{
+									<a style ="color:rgb(209,0,36)" asp-action="index" asp-controller="Store">All Categories</a>
+								}
+								else
+								{
+									<a asp-action="index" asp-controller="Store">All Categories</a>
+								}
+							</label>
+						</div>
+
+						@* 209,0,36
+						D10024 *@
+
+						@foreach (var item in types)
+						{
+							<div>
+								<label for="category-1">
+									<span style="margin-right:2rem"></span>
+									@if (Category == @item)
+									{
+										<a style="color:rgb(209,0,36)" asp-action="index" asp-controller="Store" asp-route-category="@item">@item</a>
+									}
+									else
+									{
+										<a asp-action="index" asp-controller="Store" asp-route-category="@item">@item</a>
+									}
+								</label>
+							</div>	
+						}
+
+						@* <div class="input-checkbox">
+							<input type="checkbox" id="category-2">
+							<label for="category-2">
+								<span></span>
+								Smartphones
+								<small>(740)</small>
+							</label>
+						</div> *@
+
+					</div>
+				</div>
+				<!-- /aside Widget -->
+				<!-- aside Widget -->
+				
+				<!-- PRICE -->
+
+				<!-- /aside Widget -->
+				<!-- aside Widget -->
+				<div class="aside">
+					<h3 class="aside-title">Brand</h3>
+					<div class="checkbox-filter">
+
+						<div>
+							<label for="brand-1">
+								<span style="margin-right:2rem"></span>
+								@if (Brand == "All Brands")
+								{
+									<a style="color:rgb(209,0,36)" asp-action="index" asp-controller="Store">All Brands</a>
+								}
+								else
+								{
+									<a asp-action="index" asp-controller="Store">All Brands</a>
+								}
+								
+							</label>
+						</div>
+
+						@foreach (var item in brands)
+						{
+							<div>
+								<label for="brand-1">
+									<span style="margin-right:2rem"></span>
+									@if (Brand == @item)
+									{
+										<a style="color:rgb(209,0,36)" asp-action="index" asp-controller="Store" asp-route-brand="@item">@item</a>
+									}
+									else
+									{
+										<a asp-action="index" asp-controller="Store" asp-route-brand="@item">@item</a>
+									}
+								</label>
+							</div>
+						}
+						
+					@* <div class="input-checkbox">
+							<input type="checkbox" id="brand-6">
+							<label for="brand-6">
+								<span></span>
+								SONY
+								<small>(755)</small>
+							</label>
+						/div> *@
+					</div>
+				</div>
+				<!-- /aside Widget -->
+				<!-- aside Widget -->
+				
+				<!-- Top Selling -->
+
+				<!-- /aside Widget -->
+			</div>
+			<!-- /ASIDE -->
+			<!-- STORE -->
+			<div id="store" class="col-md-9">
+				<!-- store top filter -->
+				<div class="store-filter clearfix">
+					<div class="store-sort">
+						<label>
+							Sort By:
+							<select class="input-select" id="sortOptions">
+
+								<option value="default">default</option>
+								<option value="name">name</option>
+								<option value="price">price</option>
+								<option value="latest">latest</option>
+							</select>
+
+							<script>
+								document.getElementById("sortOptions").addEventListener("change", function () {
+									var selectedValue = this.value;
+									window.location.href = '/Store/Index?sort=' + selectedValue;
+								});
+							</script>
+
+						</label>
+					</div>
+					@* 
+					<ul class="store-grid">
+						<li class="active"><i class="fa fa-th"></i></li>
+						<li><a href="#"><i class="fa fa-th-list"></i></a></li>
+					</ul> *@
+				</div>
+				<!-- /store top filter -->
+				<!-- store products -->
+				<div class="row">
+					<!-- product -->
+					@foreach (var item in storeItems)
+					{
+						int counter = 1;
+
+						dynamic itemPrice;
+						if (item.DiscountPercent == 0 || item.DiscountPercent == null)
+							itemPrice = item.SalesPrice;
+						else
+							itemPrice = item.SalesPrice - (item.SalesPrice * item.DiscountPercent / 100);
+
+						<div class="col-md-4 col-xs-6">
+							<div class="product">
+								<div class="product-img">
+									<img src="~/Uploads/Items/@item.ImagePath" alt="">
+									<div class="product-label">
+										<span class="sale">-@(item.DiscountPercent)%</span>
+										@if (item.CreatedDate > DateTime.Now.AddDays(-20))
+											{
+												<span class="new">NEW</span>
+											}
+									</div>
+								</div>
+								<div class="product-body">
+									<p class="product-category">@item.ItemType</p>
+									<h3 class="product-name"><a asp-action="Index" asp-controller="Item" asp-route-id="@item.ItemId">
+										@item.ItemName</a></h3>
+									<h4 class="product-price">L.E. @itemPrice <del class="product-old-price">L.E. @item.SalesPrice</del></h4>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+									</div>
+									<div class="product-btns">
+										<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+										@* <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button> *@
+										<button class="quick-view">
+											<a asp-action="Index" asp-controller="Item" asp-route-id="@item.ItemId"><i class="fa fa-eye"></i></a>
+										<span class="tooltipp">quick view</span></button>
+									</div>
+								</div>
+								<div class="add-to-cart">
+									<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								</div>
+							</div>
+
+						</div>
+
+						counter++;
+						if (counter%3 == 0)
+						{
+							<br />
+						}
+					}
+					
+					<!-- /product -->
+
+
+					
+
+
+					<div class="clearfix visible-lg visible-md"></div>
+
+
+
+					<div class="clearfix visible-sm visible-xs"></div>
+
+
+
+
+
+					
+
+
+
+
+
+					<div class="clearfix visible-sm visible-xs"></div>
+
+
+				</div>
+				<!-- /store products -->
+				<!-- store bottom filter -->
+				<div class="store-filter clearfix">
+					
+					<ul class="store-pagination">
+						@if (PageNumber > 1)
+						{
+							<li>
+								<a asp-action="Index" asp-controller="Store" asp-route-category="@Category"
+								   asp-route-brand="@Brand" asp-route-sort="@Sort" asp-route-pageNumber="@(PageNumber - 1)">
+								<i class="fa fa-angle-left"></i></a>
+							</li>
+						}
+
+						@for (int i = 1; i <= TotalPages; i++)
+						{
+							if (i == PageNumber)
+							{
+								<li class="active">
+									<a asp-action="Index" asp-controller="Store" asp-route-category="@Category"
+									   asp-route-brand="@Brand" asp-route-sort="@Sort" asp-route-pageNumber="@i">
+										@i</a>
+								</li>
+							}
+							else
+							{
+								<li>
+									<a asp-action="Index" asp-controller="Store" asp-route-category="@Category"
+									   asp-route-brand="@Brand" asp-route-sort="@Sort" asp-route-pageNumber="@i">
+									   @i</a>
+								</li>
+							}
+						}
+
+						@if (PageNumber < TotalPages)
+						{
+							<li>
+								<a asp-action="Index" asp-controller="Store" asp-route-category="@Category"
+								   asp-route-brand="@Brand" asp-route-sort="@Sort" asp-route-pageNumber="@(PageNumber + 1)">
+									<i class="fa fa-angle-right"></i></a>
+							</li>
+						}
+					</ul>
+				</div>
+				<!-- /store bottom filter -->
+			</div>
+			<!-- /STORE -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- NEWSLETTER -->
+<div id="newsletter" class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="newsletter">
+					<p>Sign Up for the <strong>NEWSLETTER</strong></p>
+					<form>
+						<input class="input" type="email" placeholder="Enter Your Email">
+						<button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+					</form>
+					<ul class="newsletter-follow">
+						<li>
+							<a href="#"><i class="fa fa-facebook"></i></a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-twitter"></i></a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-instagram"></i></a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-pinterest"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /NEWSLETTER -->

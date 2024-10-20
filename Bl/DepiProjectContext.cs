@@ -1,6 +1,6 @@
-﻿namespace Bl;
+namespace Bl;
 
-public partial class DepiProjectContext : DbContext
+public partial class DepiProjectContext : IdentityDbContext<ApplicationUser>
 {
     public DepiProjectContext()
     {
@@ -12,8 +12,10 @@ public partial class DepiProjectContext : DbContext
     }
 
     public virtual DbSet<Category> Categories { get; set; }
+    public virtual DbSet<TbSetting> TbSettings { get; set; }
 
     public virtual DbSet<Consultation> Consultations { get; set; }
+    public DbSet<myTasks> Tasks { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
 
@@ -34,6 +36,8 @@ public partial class DepiProjectContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B95CEDCD5");
@@ -50,32 +54,32 @@ public partial class DepiProjectContext : DbContext
             entity.HasOne(d => d.ParentCategory).WithMany(p => p.InverseParentCategory)
                 .HasForeignKey(d => d.ParentCategoryId)
                 .HasConstraintName("FK_Categories_ParentCategoryId");
-        });
 
+        });
         modelBuilder.Entity<Consultation>(entity =>
-        {
-            entity.HasKey(e => e.ConsultationId).HasName("PK__Consulta__5D014A98E71095FA");
+          {
+              entity.HasKey(e => e.ConsultationId).HasName("PK__Consulta__5D014A98E71095FA");
 
-            entity.HasIndex(e => e.CustomerId, "IX_Consultations_CustomerId");
+              entity.HasIndex(e => e.CustomerId, "IX_Consultations_CustomerId");
 
-            entity.HasIndex(e => e.EngineerId, "IX_Consultations_EngineerId");
+              entity.HasIndex(e => e.EngineerId, "IX_Consultations_EngineerId");
 
-            entity.Property(e => e.ConsultationCost).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.EndDate).HasColumnType("datetime");
-            entity.Property(e => e.IssueDescription).HasMaxLength(500);
-            entity.Property(e => e.StartDate).HasColumnType("datetime");
-            entity.Property(e => e.Status).HasMaxLength(50);
+              entity.Property(e => e.ConsultationCost).HasColumnType("decimal(18, 2)");
+              entity.Property(e => e.EndDate).HasColumnType("datetime");
+              entity.Property(e => e.IssueDescription).HasMaxLength(500);
+              entity.Property(e => e.StartDate).HasColumnType("datetime");
+              entity.Property(e => e.Status).HasMaxLength(50);
 
-            entity.HasOne(d => d.Customer).WithMany(p => p.Consultations)
-                .HasForeignKey(d => d.CustomerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Consultations_Customer");
+              entity.HasOne(d => d.Customer).WithMany(p => p.Consultations)
+                  .HasForeignKey(d => d.CustomerId)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_Consultations_Customer");
 
-            entity.HasOne(d => d.Engineer).WithMany(p => p.Consultations)
-                .HasForeignKey(d => d.EngineerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Consultations_Engineer");
-        });
+              entity.HasOne(d => d.Engineer).WithMany(p => p.Consultations)
+                  .HasForeignKey(d => d.EngineerId)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_Consultations_Engineer");
+          });
 
         modelBuilder.Entity<Customer>(entity =>
         {
@@ -86,12 +90,12 @@ public partial class DepiProjectContext : DbContext
             entity.HasIndex(e => e.Email, "UQ__Customer__A9D10534AD9FBD18").IsUnique();
 
             entity.Property(e => e.Address).HasMaxLength(255);
-            entity.Property(e => e.ConfirmPassword).HasMaxLength(100);
+            //entity.Property(e => e.ConfirmPassword).HasMaxLength(100);
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FirstName).HasMaxLength(100);
             entity.Property(e => e.FreeConsultationCount).HasDefaultValue(0);
             entity.Property(e => e.LastName).HasMaxLength(100);
-            entity.Property(e => e.Password).HasMaxLength(100);
+            //entity.Property(e => e.Password).HasMaxLength(100);
             entity.Property(e => e.Phone).HasMaxLength(15);
         });
 
