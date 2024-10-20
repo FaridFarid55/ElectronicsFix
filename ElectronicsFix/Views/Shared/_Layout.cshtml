@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
 
     <title>@ViewData["Title"] - ElectronicsFix</title>
 
@@ -19,27 +19,27 @@
 
 
 
-<!--  Custom CSS to style dropdown links -->
-<style>
-    .dropdown-menu {
-        background-color: black; /* Keep background black */
-        padding: 0; /* Remove any extra padding */
-    }
+    <!--  Custom CSS to style dropdown links -->
+    <style>
+        .dropdown-menu {
+            background-color: black; /* Keep background black */
+            padding: 0; /* Remove any extra padding */
+        }
 
-    .account-dropdown a {
-        font-weight: bold;
-        font-size: 16px;
-        color: white; /* Keep text color white */
-        display: flex; /* Use flexbox to control layout */
-        justify-content: center; /* Center content horizontally */
-        align-items: center; /* Center content vertically */
-        height: 40px; /* Adjust height to match design */
-    }
+        .account-dropdown a {
+            font-weight: bold;
+            font-size: 16px;
+            color: white; /* Keep text color white */
+            display: flex; /* Use flexbox to control layout */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            height: 40px; /* Adjust height to match design */
+        }
 
-    .account-dropdown a:hover {
-        background-color: gray; /* Optional: Change hover background color */
-    }
-</style>
+            .account-dropdown a:hover {
+                background-color: gray; /* Optional: Change hover background color */
+            }
+    </style>
 
 
     @await RenderSectionAsync("Style", required: false)
@@ -52,7 +52,7 @@
     <!-- HEADER -->
     <header>
         <!-- TOP HEADER -->
-        
+
         <div id="top-header">
             <div class="container">
                 <ul class="header-links pull-left">
@@ -61,8 +61,33 @@
                     <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
                 </ul>
                 <ul class="header-links pull-right">
+
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+
+
+                        <li><a href="/Consultations"> <i class="fa fa-car"></i>Consultations</a></li>
+                        @if (User.IsInRole("Customer"))
+                        {
+                            <li>
+                                <a href="/Customer/Profile">
+                                    <i class="fa fa-home"></i>
+                                    MyProfile
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="/Engineer/Profile">
+                                    <i class="fa fa-home"></i>
+                                    MyProfile
+                                </a>
+                            </li>
+                        }
+                    }
+
                     <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                    <!-- Combined Login/SignUp/Logout in one list with custom styling-->
                     <li class="dropdown">
                         <a class="dropdwn-toggle" data-toggle="dropdown" aria-expanded="true">
                             <i class="fa fa-user-o"></i> Account
@@ -79,9 +104,10 @@
                                 <li><a asp-controller="Account" asp-action="MyCard"></a>My Card</li>
                                 <li><a asp-controller="Account" asp-action="LoginOut">Log Out</a></li>
                             }
-                          
+
                         </ul>
                     </li>
+
                 </ul>
             </div>
         </div>

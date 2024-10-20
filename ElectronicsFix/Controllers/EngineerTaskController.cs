@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Bl;
-using Domains;
-
-namespace ElectronicsFix.Controllers
+﻿namespace ElectronicsFix.Controllers
 {
     public class EngineersController : Controller
     {
