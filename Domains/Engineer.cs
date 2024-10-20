@@ -1,42 +1,43 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Domains;
-
-public partial class Engineer
+namespace Domains
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int EngineerId { get; set; }
+    public class Engineer
+    {
+        public int EngineerId { get; set; }
 
-    [Required]
-    [Display(Name = "First Name")]
-    [StringLength(100)]
-    public string FirstName { get; set; } = null!;
+        [Required(ErrorMessage = "First Name is required.")]
+        [StringLength(50, ErrorMessage = "First Name cannot exceed 50 characters.")]
+        public string FirstName { get; set; }=string.Empty;
 
-    [Required]
-    [Display(Name = "Last Name")]
-    [StringLength(100)]
-    public string LastName { get; set; } = null!;
+        [Required(ErrorMessage = "Last Name is required.")]
+        [StringLength(50, ErrorMessage = "Last Name cannot exceed 50 characters.")]
+        public string LastName { get; set; } = string.Empty;
 
-    [StringLength(15)]
-    public string? Phone { get; set; }
+        [Required(ErrorMessage = "Phone is required.")]
+        [Phone(ErrorMessage = "Invalid phone number format.")]
+        public string Phone { get; set; } = string.Empty;
 
-    [StringLength(255)]
-    public string? Address { get; set; }
+        [Required(ErrorMessage = "Address is required.")]
+        [StringLength(100, ErrorMessage = "Address cannot exceed 100 characters.")]
+        public string Address { get; set; } = string.Empty;
 
-    [Required]
-    [EmailAddress]
-    [StringLength(100)]
-    public string Email { get; set; } = null!;
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email address format.")]
+        public string Email { get; set; } = string.Empty;// يجب أن يبقى غير قابل للتعديل
+        public string Password { get; set; } = string.Empty; // للتخزين الآمن يجب استخدام hashing
+        public string ConfirmPassword { get; set; } = string.Empty;
+        public virtual ICollection<Consultation> Consultations { get; set; } = new List<Consultation>();
+        // ميثود لتحديث المعلومات
+        public void UpdateEngineerInfo(Engineer updatedEngineer)
+        {
+            
+            FirstName = updatedEngineer.FirstName;
+            LastName = updatedEngineer.LastName;
+            Phone = updatedEngineer.Phone;
+            Address = updatedEngineer.Address;
 
-    [Required]
-    [StringLength(100)]
-    public string Password { get; set; } = null!;
-
-    [Required]
-    [Display(Name = "Confirm Password")]
-    [StringLength(100)]
-    public string ConfirmPassword { get; set; } = null!;
-
-    public virtual ICollection<Consultation> Consultations { get; set; } = new List<Consultation>();
+            // نترك الـ Email و EngineerId بدون تعديل
+        }
+    }
 }
