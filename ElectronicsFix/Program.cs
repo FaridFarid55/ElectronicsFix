@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore; 
+
 namespace ElectronicsFix
 {
     public class Program
@@ -6,26 +9,32 @@ namespace ElectronicsFix
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            // ????? ????? ???????? ???????? ???????
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login"; // ???? ????? ??????
+                    options.AccessDeniedPath = "/Account/AccessDenied"; // ???? ?????? ???????
+                });
 
-            // Add database
-            builder.Services.AddDbContext<DepiProjectContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            // ????? ????? ?????? ??????
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<DepiProjectContext>(option =>
+                option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
-            // Ensure the database is created and apply migrations
+            // ????? ??????? ??? ????? ????????
             using (var scope = app.Services.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<DepiProjectContext>();
-                context.Database.Migrate();  // Apply pending migrations
+                context.Database.Migrate();
             }
 
-            // Configure the HTTP request pipeline.
+            // ??????? ?? ???????
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -34,31 +43,27 @@ namespace ElectronicsFix
 
             app.UseRouting();
 
+            // ????? ???????? ????????
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                    name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-
-
+            // ????? ????????
+            //app.MapControllerRoute(
+            //    name: "areas",
+            //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
             //app.MapControllerRoute(
-            //     name: "default",
-            //     pattern: "{controller=Home}/{action=Index}/{id?}");
-            app.MapControllerRoute(
-                name: "admin",
-                pattern: "Admin/{controller=Items}/{action=Index}/{id?}");
+            //    name: "admin",
+            //    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
             app.Run();
         }
     }
 }
-
-
-

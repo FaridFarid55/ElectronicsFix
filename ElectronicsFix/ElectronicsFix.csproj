@@ -16,6 +16,9 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -37,8 +40,6 @@
     <Folder Include="wwwroot\Admin\assets\css\" />
     <Folder Include="wwwroot\Admin\assets\js\" />
     <Folder Include="wwwroot\Admin\assets\images\" />
-    <Folder Include="wwwroot\font\" />
-    <Folder Include="wwwroot\image\" />
     <Folder Include="wwwroot\Uploads\Items\" />
     <Folder Include="wwwroot\Uploads\Categories\" />
   </ItemGroup>

@@ -1,0 +1,45 @@
+﻿@model Domains.Customer
+
+@{
+    ViewData["Title"] = "Customer Profile";
+}
+
+<div class="profile-container" style="display: flex; flex-direction: column; align-items: center; margin-top: 50px;">
+    @if (Model == null)
+    {
+        <div class="alert alert-danger">
+            Customer details are not available.
+        </div>
+    }
+    else
+    {
+        <h2 style="color: red;">Customer Profile</h2>
+
+        <div class="card shadow-lg border-danger" style="background-color: #f8f9fa; width: 100%; max-width: 600px;">
+            <div class="card-header bg-danger text-white text-center">
+                <h3 class="mb-0">Customer Details</h3>
+            </div>
+            <div class="card-body text-center">
+                <div class="profile-image mb-4">
+                    <h4>Profile Image</h4>
+                    <img src="/img/default-engineer.jpg" alt="Customer Profile Image" class="img-thumbnail" style="width: 150px; height: 150px;">
+                </div>
+                <div class="profile-info">
+                    <h4>ID: @Model.CustomerId</h4>
+                    <h4>First Name: @Model.FirstName</h4>
+                    <h4>Last Name: @Model.LastName</h4>
+                    <h4>Phone: @Model.Phone</h4>
+                    <h4>Address: @Model.Address</h4>
+                    <h4>Email: @Model.Email</h4>
+                </div>
+                <div class="mt-4">
+                    <a asp-controller="Customer" asp-action="Edit" class="btn btn-lg btn-danger">Edit Profile</a>
+                </div>
+            </div>
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+            }
+        </div>
+    }
+</div>

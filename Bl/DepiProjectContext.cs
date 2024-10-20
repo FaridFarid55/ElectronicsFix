@@ -1,4 +1,6 @@
-﻿namespace Bl;
+﻿
+
+namespace Bl;
 
 public partial class DepiProjectContext : DbContext
 {
@@ -30,10 +32,13 @@ public partial class DepiProjectContext : DbContext
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
-
+   
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
+
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B95CEDCD5");
@@ -50,6 +55,7 @@ public partial class DepiProjectContext : DbContext
             entity.HasOne(d => d.ParentCategory).WithMany(p => p.InverseParentCategory)
                 .HasForeignKey(d => d.ParentCategoryId)
                 .HasConstraintName("FK_Categories_ParentCategoryId");
+      
         });
 
         modelBuilder.Entity<Consultation>(entity =>
