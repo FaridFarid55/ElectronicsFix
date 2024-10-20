@@ -1,5 +1,6 @@
 ﻿namespace ElectronicsFix.Areas.admin.Controllers
 {
+    [Authorize(Roles = "Admin,Owner")]
     [Area("admin")]
     public class CustomersController : Controller
     {
@@ -96,11 +97,11 @@
             if (id != customer.CustomerId) return NotFound();
 
             // Check if passwords match
-            if (customer.Password != customer.ConfirmPassword)
-            {
-                ModelState.AddModelError(string.Empty, "Passwords do not match.");
-                return View(customer);
-            }
+            //if (customer.Password != customer.ConfirmPassword)
+            //{
+            //    ModelState.AddModelError(string.Empty, "Passwords do not match.");
+            //    return View(customer);
+            //}
 
             // If the model state is invalid, return the view with the submitted data
             if (!ModelState.IsValid) return View("Edit", customer);

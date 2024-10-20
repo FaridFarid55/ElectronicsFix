@@ -5,6 +5,7 @@ namespace Domains
     // Form Farid Farid
     public class TbSetting
     {
+        [Key]
         public int ID { get; set; }
 
         [MaxLength(400)]

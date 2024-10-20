@@ -2,6 +2,7 @@
 {
     public partial class ItemDiscount
     {
+        [Key]
         public int ItemDiscountId { get; set; }
 
         [Required(ErrorMessage = "Item ID is required.")]

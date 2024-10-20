@@ -1,6 +1,5 @@
 ﻿namespace ElectronicsFix.Areas.admin.Controllers
 {
-
     [Area("admin")]
     public class SettingsController : Controller
     {
@@ -13,14 +12,14 @@
             this.oClsSettings = oClsSettings;
         }
         // Method
-        //[Authorize(Roles = "Admin,Data Entry,Owner")]
+        [Authorize(Roles = "Admin,Owner")]
         [HttpGet]
         public IActionResult Profile()
         {
             return View();
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpGet]
         public IActionResult Website()
         {
@@ -36,7 +35,7 @@
             return View(item);
         }
 
-        //  [Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpGet]
         public IActionResult Edit_Website(int Id)
         {

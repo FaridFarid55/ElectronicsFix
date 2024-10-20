@@ -1,5 +1,6 @@
 ﻿namespace ElectronicsFix.Areas.admin.Controllers
 {
+    [Authorize(Roles = "Admin,Owner")]
     [Area("admin")]
     public class ItemsController : Controller
     {

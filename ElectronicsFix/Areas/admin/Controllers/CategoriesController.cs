@@ -3,6 +3,7 @@
 namespace ElectronicsFix.Areas.admin.Controllers
 {
     // Specify that this controller is part of the "admin" area.
+    [Authorize(Roles = "Admin,Owner")]
     [Area("admin")]
     public class CategoriesController : Controller
     {

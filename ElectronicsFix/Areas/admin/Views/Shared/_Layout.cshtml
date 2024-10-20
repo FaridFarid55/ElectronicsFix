@@ -1,4 +1,4 @@
-﻿﻿
+﻿@inject UserManager<ApplicationUser> _userManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,13 +42,17 @@
                     <div class="profile-desc">
                         <div class="profile-pic">
                             <div class="count-indicator">
-                                <img alt="">
+                                <img alt=""
                                 <img class="img-xs rounded-circle " src="~/Admin/assets/images/faces/face15.jpg" alt="">
                                 <span class="count bg-success"></span>
                             </div>
                             <div class="profile-name">
-                                <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
-                                <span>Gold Member</span>
+                                @{
+                                    var user = await _userManager.GetUserAsync(User);
+                                    <h5 class="mb-0 font-weight-normal">@user.UserName</h5>
+                                    <span>Gold Member</span>
+                                }
+                             
                             </div>
                         </div>
                         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -261,7 +265,9 @@
                             <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                                 <div class="navbar-profile">
                                     <img class="img-xs rounded-circle" src="~/Admin/assets/images/faces/face15.jpg" alt="">
-                                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+                                    @{     
+                                        <h5 class="mb-0 font-weight-normal">@user.UserName</h5>
+                                    }
                                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                                 </div>
                             </a>
@@ -280,19 +286,21 @@
                                     </div>
                                 </a>
 
-                                @* Settings-website *@
-                                <div class="dropdown-divider"></div>
-                                <a href="~/admin/Settings/Website" class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-settings text-success"></i>
+                                @if (User.IsInRole("Owner"))
+                                {
+                                    @* Settings-website *@
+                                    <div class="dropdown-divider"></div>
+                                    <a href="~/admin/Settings/Website" class="dropdown-item preview-item">
+                                        <div class="preview-thumbnail">
+                                            <div class="preview-icon bg-dark rounded-circle">
+                                                <i class="mdi mdi-settings text-success"></i>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject mb-1">Settings Website</p>
-                                    </div>
-                                </a>
-
+                                        <div class="preview-item-content">
+                                            <p class="preview-subject mb-1">Settings Website</p>
+                                        </div>
+                                    </a>
+                                }
                                 @* log out *@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item preview-item">

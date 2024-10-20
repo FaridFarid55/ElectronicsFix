@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Domains;
+﻿namespace Domains;
 
 public partial class Order
 {
+    [Key]
     public int OrderId { get; set; }
 
     public int CustomerId { get; set; }
