@@ -18,22 +18,31 @@
     <link type="text/css" rel="stylesheet" href="~/css/style.css" />
 
 
-
-    <!--  Custom CSS to style dropdown links -->
+    <!-- Custom CSS to style dropdown links -->
     <style>
-        .account-dropdown a {
-            font-weight: bold;
-            font-size: 16px;
-            color: white; /* Keep text color white */
-            display: flex; /* Use flexbox to control layout */
-            justify-content: center; /* Center content horizontally */
-            align-items: center; /* Center content vertically */
-            height: 40px; /* Adjust height to match design */
+        .account-dropdown {
+            background-color: #333; /* ????? ??????? ???????? */
+            border-radius: 5px; /* ????? ??????? */
+            padding: 10px 0; /* ????? ?????? ???? ????? */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* ????? ?? */
         }
 
-            .account-dropdown a:hover {
-                background-color: gray; /* Optional: Change hover background color */
+            .account-dropdown a {
+                font-weight: bold; /* ??? ???? ???? */
+                font-size: 16px; /* ??? ???? */
+                color: white; /* ??? ???? */
+                display: flex; /* ??????? ????? ?????? ?? ??????? */
+                justify-content: center; /* ????? ??????? ?????? */
+                align-items: center; /* ????? ??????? ??????? */
+                height: 40px; /* ?????? ???? */
+                text-decoration: none; /* ????? ???? ?????? */
+                padding: 0 15px; /* ????? ?????? ?????? */
             }
+
+                .account-dropdown a:hover {
+                    background-color: gray; /* ????? ??? ??????? ??? ??????? */
+                    color: yellow; /* ????? ??? ???? ??? ??????? */
+                }
     </style>
 
 
@@ -71,7 +80,7 @@
 
 
                     <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                    <li class="dropdown">
+                    <li class="drpdown">
                         <a class="dropdwn-toggle" data-toggle="dropdown" aria-expanded="true">
                             <i class="fa fa-user-o"></i> Account
                             <span class="caret"></span>
@@ -84,10 +93,9 @@
                             }
                             else
                             {
-                                <li><a asp-controller="Account" asp-action="MyCard"></a>My Card</li>
+                                <li><a asp-controller="Account" asp-action="MyCard">My Card</a></li>
                                 <li><a asp-controller="Account" asp-action="LoginOut">Log Out</a></li>
                             }
-
                         </ul>
                     </li>
 
