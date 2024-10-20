@@ -9,8 +9,12 @@ namespace ElectronicsFix
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddControllersWithViews();
 
-            // ????? ????? ???????? ???????? ???????
+
+            // ????? ????? ?????? ??????
+            builder.Services.AddDbContext<DepiProjectContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -18,10 +22,7 @@ namespace ElectronicsFix
                     options.AccessDeniedPath = "/Account/AccessDenied"; // ???? ?????? ???????
                 });
 
-            // ????? ????? ?????? ??????
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<DepiProjectContext>(option =>
-                option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
             // Add Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option =>

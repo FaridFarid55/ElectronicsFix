@@ -1,6 +1,5 @@
 ﻿
 // Ignore Spelling: Cls
-
 namespace Bl
 {
     public interface ISettings
