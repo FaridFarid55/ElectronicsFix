@@ -30,10 +30,9 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block mb-3">Login</button>
+                    <button type="submit" class="btn btn-primary  mb-3">Login</button>
+                    <a asp-controller="Account" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn  btn-primary">Create an Account</a>
                 </form>
-
-                <a asp-controller="Account" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-solid">Create an Account</a>
             </div>
             <br /><br />
         </div>
