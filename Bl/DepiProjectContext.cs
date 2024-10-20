@@ -33,6 +33,7 @@ public partial class DepiProjectContext : IdentityDbContext<ApplicationUser>
 
     public virtual DbSet<Payment> Payments { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
