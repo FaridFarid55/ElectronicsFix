@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Ui\" />
     <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\Admin\assets\css\" />

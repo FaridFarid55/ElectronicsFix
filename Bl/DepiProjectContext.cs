@@ -31,6 +31,10 @@ public partial class DepiProjectContext : DbContext
 
     public virtual DbSet<Payment> Payments { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        //base.OnConfiguring(optionsBuilder); 
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
