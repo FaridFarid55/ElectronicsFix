@@ -1,8 +1,10 @@
-﻿
+
+=======
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Bl;
 
-public partial class DepiProjectContext : DbContext
+public partial class DepiProjectContext : IdentityDbContext<ApplicationUser>
 {
     public DepiProjectContext()
     {
@@ -16,6 +18,7 @@ public partial class DepiProjectContext : DbContext
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Consultation> Consultations { get; set; }
+    public DbSet<Task> Tasks { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
 
@@ -32,12 +35,10 @@ public partial class DepiProjectContext : DbContext
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
-   
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
 
         modelBuilder.Entity<Category>(entity =>
         {
@@ -92,12 +93,12 @@ public partial class DepiProjectContext : DbContext
             entity.HasIndex(e => e.Email, "UQ__Customer__A9D10534AD9FBD18").IsUnique();
 
             entity.Property(e => e.Address).HasMaxLength(255);
-            entity.Property(e => e.ConfirmPassword).HasMaxLength(100);
+            //entity.Property(e => e.ConfirmPassword).HasMaxLength(100);
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FirstName).HasMaxLength(100);
             entity.Property(e => e.FreeConsultationCount).HasDefaultValue(0);
             entity.Property(e => e.LastName).HasMaxLength(100);
-            entity.Property(e => e.Password).HasMaxLength(100);
+            //entity.Property(e => e.Password).HasMaxLength(100);
             entity.Property(e => e.Phone).HasMaxLength(15);
         });
 

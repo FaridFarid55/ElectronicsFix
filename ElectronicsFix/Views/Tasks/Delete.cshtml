@@ -1,0 +1,56 @@
+﻿@model Domains.Tasks
+
+@{
+    ViewData["Title"] = "Delete Task";
+}
+
+<div class="container">
+    <h1>Delete Task</h1>
+
+    <hr />
+    <div class="row">
+        <div>
+            <h3>Are you sure you want to delete this task?</h3>
+            <div class="form-group">
+                <label asp-for="TaskTitle" class="control-label"></label>
+                <input asp-for="TaskTitle" class="form-control" disabled />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TaskDescription" class="control-label"></label>
+                <textarea asp-for="TaskDescription" class="form-control" disabled></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TaskCost" class="control-label"></label>
+                <input asp-for="TaskCost" class="form-control" disabled />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" disabled />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" disabled />
+            </div>
+
+            <div class="form-group">
+                <form asp-action="DeleteConfirmed" method="post">
+                    <input type="hidden" asp-for="TaskId" />
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    <a asp-controller="Tasks" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

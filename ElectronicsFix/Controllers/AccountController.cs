@@ -1,83 +1,161 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Security.Claims;
+
+﻿using Microsoft.AspNetCore.Identity;
+
 
 namespace ElectronicsFix.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly DepiProjectContext _context;
+        private readonly ICustomers oClsCustomers;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signManager;
+        private ApplicationUser user;
 
-        public AccountController(DepiProjectContext context)
+        // constrictor
+        public AccountController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signManager, ICustomers customers)
         {
-            _context = context;
+            this._userManager = _userManager;
+            this._signManager = _signManager;
+            oClsCustomers = customers;
         }
 
+        //
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> LoginOut()
         {
-            return View();
+            await _signManager.SignOutAsync();
+            return Redirect("~/");
+        }
+
+        //
+        [HttpGet]
+        public IActionResult Login(string returnUrl)
+        {
+            Login login = new Login
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(login);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(string email, string password)
+        public async Task<IActionResult> Login(Login loginModel)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Email and password are required.");
-                return View();
+                return View("Login", loginModel);
             }
 
-            // البحث في جدول المهندسين
-            var engineer = _context.Engineers.FirstOrDefault(e => e.Email == email && e.Password == password);
-
-            if (engineer != null)
+            try
             {
-                // إنشاء الجلسة
-                var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, engineer.EngineerId.ToString()),
-            new Claim(ClaimTypes.Email, engineer.Email)
-        };
+                var myUser = await _userManager.FindByEmailAsync(loginModel.Email);
+                // Attempt to sign in the user
+                var loginResult = await _signManager.PasswordSignInAsync(myUser.NormalizedUserName, loginModel.Password, isPersistent: true, lockoutOnFailure: true);
 
-                var identity = new ClaimsIdentity(claims, "Engineer");
-                var principal = new ClaimsPrincipal(identity);
-
-                // تسجيل الدخول
-                HttpContext.SignInAsync(principal);
-
-                // التوجيه إلى الملف الشخصي
-                return RedirectToAction("Profile", "Engineer");
+                if (loginResult.Succeeded)
+                {
+                    // Redirect to the return URL or the home page if none is provided
+                    string sReturnUrl = ClsUiHelper.Url(loginModel.ReturnUrl);
+                    return Redirect(sReturnUrl);
+                }
+                else
+                {
+                    // Invalid login attempt
+                    ModelState.AddModelError(string.Empty, "Incorrect login attempt");
+                    return View("Login", loginModel);
+                }
             }
-
-            // البحث في جدول العملاء
-            var customer = _context.Customers.FirstOrDefault(c => c.Email == email && c.Password == password);
-
-            if (customer != null)
+            catch (Exception ex)
             {
-                // إنشاء الجلسة
-                var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, customer.CustomerId.ToString()),
-            new Claim(ClaimTypes.Email, customer.Email)
-        };
+                // Log the exception (you can use a logging framework like Serilog, NLog, etc.)
+                Console.WriteLine("An error occurred during login: " + ex.Message);
 
-                var identity = new ClaimsIdentity(claims, "Customer");
-                var principal = new ClaimsPrincipal(identity);
+                // Add an error message to the ModelState to display it in the view
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request. Please try again later");
 
-                // تسجيل الدخول
-                HttpContext.SignInAsync(principal);
+                // Optionally, you can show a more detailed message for debugging purposes in development environments
+                // ModelState.AddModelError(string.Empty, ex.Message); // Only for development
 
-                // التوجيه إلى الملف الشخصي
-                return RedirectToAction("Profile", "Customer");
+                return View("Login", loginModel);
             }
-
-            // إذا لم يتم العثور على المستخدم في الجداول
-            ModelState.AddModelError("", "Invalid login attempt.");
-            return View();
         }
 
+
+
+        //
+        [HttpGet]
+        public IActionResult Register(string returnUrl)
+        {
+            Customer userModel = new Customer
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(userModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(Customer userModel)
+        {
+            if (!ModelState.IsValid)
+                return View(userModel);
+
+
+            var user = new ApplicationUser
+            {
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                Email = userModel.Email,
+                // PhoneNumber = userModel.Phone,
+                UserName = $"{userModel.FirstName}_{userModel.LastName}",
+
+            };
+
+            try
+            {
+                // Create the user
+                var result = await _userManager.CreateAsync(user, userModel.Password);
+
+                // save customer in database
+                //    if (result.Succeeded) oClsCustomers.Save(userModel);
+
+
+
+                if (result.Succeeded)
+                {
+                    // Sign in the user
+                    await _signManager.PasswordSignInAsync(user, userModel.Password, isPersistent: true, lockoutOnFailure: true);
+
+                    // Add the default role
+                    await _userManager.AddToRoleAsync(user, "Customer");
+
+                    // Check and redirect to the ReturnUrl
+                    string returnUrl = ClsUiHelper.Url(userModel.ReturnUrl);
+                    return Redirect(returnUrl);
+                }
+
+                // Display errors in case of failure
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the error for debugging
+                Console.WriteLine($"Error during registration: {ex.Message}");
+                // Display a general error message to the user
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request. Please try again later.");
+            }
+
+            return View(userModel);
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
