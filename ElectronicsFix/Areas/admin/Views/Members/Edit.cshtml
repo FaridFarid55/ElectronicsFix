@@ -1,0 +1,59 @@
+﻿@model EditUserRolesViewModel
+
+@{
+    ViewData["Title"] = "Edit User Roles";
+}
+
+<div class="page-header">
+    <h3 class="page-title">Edit User Roles</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Members" asp-action="Index">Users List</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit User Roles</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Edit Roles for @Model.Email</h4>
+        <hr />
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <input type="hidden" asp-for="UserId" />
+
+            <div class="form-group">
+                <label>Select Roles for @Model.Email</label>
+                <select asp-for="SelectedRoles" class="form-control select2" multiple>
+                    @foreach (var role in Model.AvailableRoles)
+                    {
+                        <option value="@role">@role</option> <!-- Remove selected attribute -->
+                    }
+                </select>
+                <span asp-validation-for="SelectedRoles" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-controller="Members" asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select2').select2({
+                placeholder: "Select roles",
+                allowClear: true
+            });
+        });
+    </script>
+}

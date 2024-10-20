@@ -2,6 +2,7 @@
 {
     public partial class ItemDetail
     {
+        [Key]
         public int ItemDetailsId { get; set; }
 
         public string? Gpu { get; set; }

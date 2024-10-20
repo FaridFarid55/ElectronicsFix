@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\image\**" />
+    <Content Remove="wwwroot\image\**" />
+    <EmbeddedResource Remove="wwwroot\image\**" />
+    <None Remove="wwwroot\image\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Areas\admin\Views\Shared\_Layout.cshtml.css" />
   </ItemGroup>
 
@@ -16,6 +23,8 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -32,18 +41,11 @@
 
   <ItemGroup>
     <Folder Include="Ui\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\Admin\assets\css\" />
     <Folder Include="wwwroot\Admin\assets\js\" />
     <Folder Include="wwwroot\Admin\assets\images\" />
-    <Folder Include="wwwroot\font\" />
-    <Folder Include="wwwroot\image\" />
     <Folder Include="wwwroot\Uploads\Items\" />
     <Folder Include="wwwroot\Uploads\Categories\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
