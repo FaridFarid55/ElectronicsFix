@@ -1,3 +1,5 @@
+
+=======
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Bl;
@@ -16,6 +18,7 @@ public partial class DepiProjectContext : IdentityDbContext<ApplicationUser>
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Consultation> Consultations { get; set; }
+    public DbSet<Task> Tasks { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
 
@@ -32,12 +35,11 @@ public partial class DepiProjectContext : IdentityDbContext<ApplicationUser>
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
-    public virtual DbSet<TbSetting> TbSettings { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B95CEDCD5");
@@ -54,6 +56,7 @@ public partial class DepiProjectContext : IdentityDbContext<ApplicationUser>
             entity.HasOne(d => d.ParentCategory).WithMany(p => p.InverseParentCategory)
                 .HasForeignKey(d => d.ParentCategoryId)
                 .HasConstraintName("FK_Categories_ParentCategoryId");
+      
         });
 
         modelBuilder.Entity<Consultation>(entity =>

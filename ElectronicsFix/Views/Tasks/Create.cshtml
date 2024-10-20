@@ -1,0 +1,68 @@
+﻿@model Domains.Tasks
+
+@{
+    ViewData["Title"] = "Create Task";
+}
+
+<div class="container">
+    <h1>Create Task</h1>
+
+    <hr />
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="EngineerId" class="control-label"></label>
+            <select asp-for="EngineerId" class="form-control" asp-items="@(new SelectList(ViewBag.Engineers, "EngineerId", "FullName"))">
+                <option value="">Select Engineer</option>
+            </select>
+            <span asp-validation-for="EngineerId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CustomerId" class="control-label"></label>
+            <select asp-for="CustomerId" class="form-control" asp-items="@(new SelectList(ViewBag.Customers, "CustomerId", "FullName"))">
+                <option value="">Select Customer</option>
+            </select>
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TaskTitle" class="control-label"></label>
+            <input asp-for="TaskTitle" class="form-control" />
+            <span asp-validation-for="TaskTitle" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TaskDescription" class="control-label"></label>
+            <textarea asp-for="TaskDescription" class="form-control"></textarea>
+            <span asp-validation-for="TaskDescription" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StartDate" class="control-label"></label>
+            <input asp-for="StartDate" class="form-control" type="datetime-local" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EndDate" class="control-label"></label>
+            <input asp-for="EndDate" class="form-control" type="datetime-local" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TaskCost" class="control-label"></label>
+            <input asp-for="TaskCost" class="form-control" />
+            <span asp-validation-for="TaskCost" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}
+

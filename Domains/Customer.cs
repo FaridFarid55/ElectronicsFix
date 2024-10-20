@@ -54,4 +54,16 @@ public partial class Customer
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+
+
+    public void UpdateCustomerInfo(Customer updatedCustomer)
+    {
+
+        FirstName = updatedCustomer.FirstName;
+        LastName = updatedCustomer.LastName;
+        Phone = updatedCustomer.Phone;
+        Address = updatedCustomer.Address;
+
+        // نترك الـ Email و EngineerId بدون تعديل
+    }
 }

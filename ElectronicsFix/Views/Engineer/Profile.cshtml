@@ -1,0 +1,59 @@
+﻿@model Domains.Engineer
+
+@{
+    ViewData["Title"] = "Engineer Profile";
+}
+
+<div class="container mt-5">
+    @if (Model == null)
+    {
+        <div class="alert alert-danger">
+            Engineer details not available.
+        </div>
+    }
+    else
+    {
+        <h2 class="my-4 text-left display-4" style="color: red;">Engineer Profile</h2> <!-- تغيير اللون إلى الأحمر -->
+
+        <div class="card shadow-lg border-danger" style="background-color: #f8f9fa;">
+            <div class="card-header bg-danger text-white text-center">
+                <h3 class="mb-0">Engineer Details</h3> <!-- تغيير كلمة Engineer Details -->
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <!-- عرض صورة ثابتة -->
+                    <img src="/img/default-engineer.jpg" alt="Engineer Profile Image" class="img-thumbnail" style="width: 150px; height: 150px;">
+                </div>
+                <dl class="row">
+                    <dt class="col-sm-4 font-weight-bold">ID:</dt> <!-- عرض الـ ID -->
+                    <dd class="col-sm-8 h5">@Model.EngineerId</dd>
+
+                    <dt class="col-sm-4 font-weight-bold">First Name:</dt>
+                    <dd class="col-sm-8 h5">@Model.FirstName</dd>
+
+                    <dt class="col-sm-4 font-weight-bold">Last Name:</dt>
+                    <dd class="col-sm-8 h5">@Model.LastName</dd>
+
+                    <dt class="col-sm-4 font-weight-bold">Phone:</dt>
+                    <dd class="col-sm-8 h5">@Model.Phone</dd>
+
+                    <dt class="col-sm-4 font-weight-bold">Address:</dt>
+                    <dd class="col-sm-8 h5">@Model.Address</dd>
+
+                    <dt class="col-sm-4 font-weight-bold">Email:</dt> <!-- إضافة عرض البريد الإلكتروني -->
+                    <dd class="col-sm-8 h5">@Model.Email</dd>
+                </dl>
+            </div>
+            <div class="card-footer text-right">
+                <a asp-controller="Engineer" asp-action="Edit" class="btn btn-lg btn-danger">Edit Profile</a> <!-- تغيير الزر إلى اللون الأحمر -->
+            </div>
+        </div>
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+        }
+    }
+</div>
+
+
