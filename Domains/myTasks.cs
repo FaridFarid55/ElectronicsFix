@@ -1,8 +1,8 @@
-﻿namespace Domains;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.ComponentModel.DataAnnotations;  
-    public partial class Tasks
+﻿namespace Domains
+{
+    public partial class myTasks
     {
+        [Key]
         public int TaskId { get; set; }
 
         [Display(Name = "Engineer")]
@@ -32,7 +32,7 @@ using System.ComponentModel.DataAnnotations;
         public DateTime? EndDate { get; set; }
 
         [ValidateNever]
-        public string Status { get; set; } = "Pending"; 
+        public string Status { get; set; } = "Pending";
 
         [Range(0, 100000, ErrorMessage = "Task cost must be between 0 and 100,000.")]
         [DataType(DataType.Currency)]
@@ -45,4 +45,4 @@ using System.ComponentModel.DataAnnotations;
         [ValidateNever]
         public virtual Engineer Engineer { get; set; } = null!;
     }
-
+}

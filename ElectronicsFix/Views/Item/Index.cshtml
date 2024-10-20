@@ -1,0 +1,355 @@
+﻿@model  ItemViewModel
+
+@{
+	// Set the page title to the item name
+	ViewData["Title"] = Model.Item.ItemName;
+
+	// Calculate the item price considering discounts
+	var itemPrice = (Model.ItemDiscount?.DiscountPercent == null || Model.ItemDiscount.DiscountPercent == 0)
+		? Model.Item.SalesPrice
+		: Model.Item.SalesPrice - (Model.Item.SalesPrice * (Model.ItemDiscount.DiscountPercent ?? 0) / 100);
+
+	// Store the main entities
+	var theItem = Model.Item;
+	var itemDiscount = Model.ItemDiscount;
+	var itemDetail = Model.ItemDetail;
+
+	// Retrieve the HomeIndexViewModel from ViewBag
+	var homeModel = ViewBag.newItems as ElectronicsFix.Models.HomeIndexViewModel;
+
+	// Declare relatedItems as List<dynamic>
+	//var relatedItems = new List<dynamic>(); // استخدام dynamic
+
+	// Ensure data exists before proceeding
+
+		// Convert lists for easier access
+		var itemDetailsList = homeModel.ItemDetails.ToList();
+		var itemDiscountsList = homeModel.ItemDiscounts.ToList();
+
+		// Initialize random generator for shuffling items
+		Random random = new Random();
+
+		// Fetch related items based on ItemType or CategoryId, excluding the current item
+		var relatedItems = homeModel.Items
+			.Where(item => itemDetailsList.Any(newItemDetails => newItemDetails.ItemDetailsId == item.ItemDetailsId))
+			.Where(item => (item.ItemType == theItem.ItemType || item.CategoryId == theItem.CategoryId) && item.ItemId != theItem.ItemId)
+			.OrderBy(_ => random.Next()) // Shuffle items
+			.Take(4)
+			.Select(item => new
+			{
+				item.ItemId,
+				item.ItemName,
+				item.SalesPrice,
+				item.CategoryId,
+				item.ItemType,
+				item.ItemDetailsId,
+				item.ImagePath,
+				DiscountPercent = itemDiscountsList
+					.Where(discount => discount.ItemId == item.ItemId)
+					.Select(discount => discount.DiscountPercent)
+					.FirstOrDefault() ?? 0 // Default to 0 if no discount found
+			})
+			.ToList();
+}
+
+
+
+
+
+
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!-- Product main img -->
+			<div class="col-md-5 col-md-push-2">
+				<div id="product-main-img">
+					<div class="product-preview">
+						<img src="~/Uploads/Items/@theItem.ImagePath" alt="">
+					</div>
+
+					@* <div class="product-preview">
+						<img src="~/Uploads/Categories/Acer.jpg" alt="">
+					</div> 
+
+					<div class="product-preview">
+						<img src="./img/product06.png" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="./img/product08.png" alt="">
+					</div> *@
+				</div>
+			</div>
+			<!-- /Product main img -->
+			<!-- Product thumb imgs -->
+
+			<!--                                    -->
+			<!--                                    -->
+			<!-- DONT REMOVE the upcomming two divs --> <!-- dont know why but its better this way ^___^ -->
+			<!--                                    -->
+			<!--                                    -->
+
+			<div class="col-md-2  col-md-pull-5">
+				<div id="product-imgs">
+					@* <div class="product-preview">
+						<img src="~/Uploads/Items/acer_aspire7.jpg" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="~/Uploads/Items/asusrog.jpg" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="./img/product06.png" alt="">
+					</div>
+
+					<div class="product-preview">
+						<img src="./img/product08.png" alt="">
+					</div> *@
+				</div>
+			</div>
+			<!-- /Product thumb imgs -->
+			<!-- Product details -->
+			<div class="col-md-5">
+				<div class="product-details">
+					<h2 class="product-name">@theItem.ItemName</h2>
+					<div>
+						<div class="product-rating">
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							@* <i class="fa fa-star-o"></i> *@
+						</div>
+						@* <a class="review-link" href="#">10 Review(s) | Add your review</a> *@
+					</div>
+					<div>
+						<h3 class="product-price">L.E. @(Math.Round(itemPrice, 2))
+						<del class="product-old-price">L.E. @theItem.SalesPrice</del></h3>
+						<span class="product-available">In Stock</span>
+					</div>
+					<p>@(theItem.Description).</p>
+
+					<div class="product-options">
+						
+					</div>
+
+					<div class="add-to-cart">
+						<div class="qty-label">
+							Qty
+							<div class="input-number">
+								<input type="number">
+								<span class="qty-up">+</span>
+								<span class="qty-down">-</span>
+							</div>
+						</div>
+						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+					</div>
+
+					@*<ul class="product-btns">
+						<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
+						<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
+					</ul>*@
+
+					<ul class="product-links">
+						<li>Category:</li>
+						<li><a asp-action="index" asp-controller="Store" asp-route-category="@Model.Item.ItemType">@Model.Item.ItemType</a></li>
+						<li><a asp-action="index" asp-controller="Store" asp-route-brand="@Model.Category.CategoryName">@Model.Category.CategoryName</a></li>
+					</ul>
+
+					<ul class="product-links">
+						<li>Share:</li>
+						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+						<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+						<li><a href="#"><i class="fa fa-envelope"></i></a></li>
+					</ul>
+
+				</div>
+			</div>
+			<!-- /Product details -->
+			<!-- Product tab -->
+			<div class="col-md-12">
+				<div id="product-tab">
+					<!-- product tab nav -->
+					<ul class="tab-nav">
+						<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
+						<li><a data-toggle="tab" href="#tab2">Details</a></li>
+						@*<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>*@
+					</ul>
+					<!-- /product tab nav -->
+					<!-- product tab content -->
+					<div class="tab-content">
+						<!-- tab1  -->
+						<div id="tab1" class="tab-pane fade in active">
+							<div class="row">
+								<div class="col-md-12">
+									<p>@Model.Item.Description</p>
+								</div>
+							</div>
+						</div>
+						<!-- /tab1  -->
+						<!-- tab2  -->
+						<div id="tab2" class="tab-pane fade in">
+							<div class="row">
+								<div class="col-md-12">
+									<p>
+										@if (itemDetail.Gpu != null)
+										{
+											<h4 class="product-name" style="display: inline-block;">GPU: </h4>
+											@itemDetail.Gpu <br/>
+										}
+										@if (itemDetail.HardDisk != null)
+										{
+											<h4 class="product-name" style="display: inline-block;">Hard Disk: </h4>
+											@itemDetail.HardDisk <br />
+										}
+										@if (itemDetail.Processor != null)
+										{
+											<h4 class="product-name" style="display: inline-block;">Processor: </h4>
+											@itemDetail.Processor <br />
+										}
+										@if (itemDetail.RamSize != null)
+										{
+											<h4 class="product-name" style="display: inline-block;">Ram Size: </h4>
+											@itemDetail.RamSize <br />
+										}
+										@if (itemDetail.ScreenResolution != null)
+										{
+											<h4 class="product-name" style="display: inline-block;">Screen Resolution: </h4>
+											@itemDetail.ScreenResolution <br />
+										}
+										@if (itemDetail.ScreenSize != null)
+										{
+											<h4 class="product-name" style="display: inline-block;">Screen Size: </h4>
+											@itemDetail.ScreenSize <br />
+										}
+										@if (itemDetail.Weight != null)
+										{
+											<h4 class="product-name" style="display: inline-block;">Weight: </h4>
+											@itemDetail.Weight <br />
+										}
+										@if (itemDetail.OsName != null)
+										{
+											<h4 class="product-name" style="display: inline-block;">Operating System: </h4>
+											@itemDetail.OsName <br />
+										}
+									</p>
+								</div>
+							</div>
+						</div>
+						<!-- /tab2  -->
+						<!-- tab3  -->
+						<!-- /tab3  -->
+					</div>
+					<!-- /product tab content  -->
+				</div>
+			</div>
+			<!-- /product tab -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- Section -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+
+			<div class="col-md-12">
+				<div class="section-title text-center">
+					<h3 class="title">Related Products</h3>
+				</div>
+			</div>
+
+			<!-- DBProducts-->
+			@foreach (var item in relatedItems)
+			{
+				var discount = homeModel.ItemDiscounts.Where(i => i.ItemId == item.ItemId)
+					.Select(i => i.DiscountPercent).FirstOrDefault(0);
+				dynamic theItemPrice;
+				if (discount == 0 || discount == null)
+					theItemPrice = item.SalesPrice;
+				else
+					theItemPrice = item.SalesPrice - (item.SalesPrice * discount / 100);
+
+				<div class="col-md-3 col-xs-6">
+					<div class="product">
+						<div class="product-img">
+							<img src="~/Uploads/Items/@item.ImagePath" alt="">
+							<div class="product-label">
+								<span class="sale">-@(discount)%</span>
+							</div>
+						</div>
+						<div class="product-body">
+							<p class="product-category">@item.ItemType</p>
+							<h3 class="product-name"><a asp-action="index" asp-controller="Item" asp-route-id="@item.ItemId">@item.ItemName</a></h3>
+							<h4 class="product-price">L.E. @(Math.Round(theItemPrice, 2)) <del class="product-old-price">L.E. @item.SalesPrice</del></h4>
+							<div class="product-rating">
+							</div>
+							<div class="product-btns">
+								<button class="quick-view">
+									<a asp-action="index" asp-controller="Item" asp-route-id="@item.ItemId"><i class="fa fa-eye"></i></a>
+									<span class="tooltipp">quick view</span>
+								</button>
+							</div>
+						</div>
+						<div class="add-to-cart">
+							<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+						</div>
+					</div>
+				</div>
+			}
+			<!------------------------->
+
+			<!-- product -->
+			<!-- /product -->
+
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /Section -->
+<!-- NEWSLETTER -->
+<div id="newsletter" class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="newsletter">
+					<p>Sign Up for the <strong>NEWSLETTER</strong></p>
+					<form>
+						<input class="input" type="email" placeholder="Enter Your Email">
+						<button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+					</form>
+					<ul class="newsletter-follow">
+						<li>
+							<a href="#"><i class="fa fa-facebook"></i></a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-twitter"></i></a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-instagram"></i></a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-pinterest"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /NEWSLETTER -->

@@ -1,11 +1,11 @@
-﻿@inject SignInManager<ApplicationUser> _signInManager
+@inject SignInManager<ApplicationUser> _signInManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
 
     <title>@ViewData["Title"] - ElectronicsFix</title>
 
@@ -19,27 +19,22 @@
 
 
 
-<!--  Custom CSS to style dropdown links -->
-<style>
-    .dropdown-menu {
-        background-color: black; /* Keep background black */
-        padding: 0; /* Remove any extra padding */
-    }
+    <!--  Custom CSS to style dropdown links -->
+    <style>
+        .account-dropdown a {
+            font-weight: bold;
+            font-size: 16px;
+            color: white; /* Keep text color white */
+            display: flex; /* Use flexbox to control layout */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            height: 40px; /* Adjust height to match design */
+        }
 
-    .account-dropdown a {
-        font-weight: bold;
-        font-size: 16px;
-        color: white; /* Keep text color white */
-        display: flex; /* Use flexbox to control layout */
-        justify-content: center; /* Center content horizontally */
-        align-items: center; /* Center content vertically */
-        height: 40px; /* Adjust height to match design */
-    }
-
-    .account-dropdown a:hover {
-        background-color: gray; /* Optional: Change hover background color */
-    }
-</style>
+            .account-dropdown a:hover {
+                background-color: gray; /* Optional: Change hover background color */
+            }
+    </style>
 
 
     @await RenderSectionAsync("Style", required: false)
@@ -52,7 +47,7 @@
     <!-- HEADER -->
     <header>
         <!-- TOP HEADER -->
-        
+
         <div id="top-header">
             <div class="container">
                 <ul class="header-links pull-left">
@@ -61,8 +56,21 @@
                     <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
                 </ul>
                 <ul class="header-links pull-right">
+
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+                        <li><a href="/Consultations"> <i class="fa fa-car"></i>Consultations</a></li>
+
+                        <li>
+                            <a href="/@(User.IsInRole("Customer") ? "Customer" : "Engineer")/Profile">
+                                <i class="fa fa-home"></i>
+                                MyProfile
+                            </a>
+                        </li>
+                    }
+
+
                     <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                    <!-- Combined Login/SignUp/Logout in one list with custom styling-->
                     <li class="dropdown">
                         <a class="dropdwn-toggle" data-toggle="dropdown" aria-expanded="true">
                             <i class="fa fa-user-o"></i> Account
@@ -79,9 +87,10 @@
                                 <li><a asp-controller="Account" asp-action="MyCard"></a>My Card</li>
                                 <li><a asp-controller="Account" asp-action="LoginOut">Log Out</a></li>
                             }
-                          
+
                         </ul>
                     </li>
+
                 </ul>
             </div>
         </div>
@@ -107,8 +116,10 @@
                             <form>
                                 <select class="input-select">
                                     <option value="0">All Categories</option>
-                                    <option value="1">Category 01</option>
-                                    <option value="1">Category 02</option>
+                                    <option value="1">HP</option>
+                                    <option value="2">logitech</option>
+                                    <option value="3">Acer</option>
+                                    <option value="4">GSkill</option>
                                 </select>
                                 <input class="input" placeholder="Search here">
                                 <button class="search-btn">Search</button>
