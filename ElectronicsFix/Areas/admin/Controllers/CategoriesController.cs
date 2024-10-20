@@ -3,6 +3,7 @@
 namespace ElectronicsFix.Areas.admin.Controllers
 {
     // Specify that this controller is part of the "admin" area.
+    [Authorize(Roles = "Admin,Owner")]
     [Area("admin")]
     public class CategoriesController : Controller
     {
@@ -131,10 +132,11 @@ namespace ElectronicsFix.Areas.admin.Controllers
         // POST: admin/Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName,CreatedDate,CreatedBy,ImageName,UpdatedBy,UpdatedDate,ParentCategoryId,OnDelete")] Category category, IFormFile File)
+        public async Task<IActionResult> Edit(int id, Category category, IFormFile File)
         {
             // Check if a file was uploaded.
             if (File != null) category.ImagePath = await ClsUiHelper.UploadImage(File, "Categories");
+            else ModelState.Remove("File");
 
             // Return a 404 if the id does not match the category id.
             if (id != category.CategoryId) return NotFound();

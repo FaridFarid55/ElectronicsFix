@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Domains;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ElectronicsFix.Areas.admin.Controllers
+﻿namespace ElectronicsFix.Areas.admin.Controllers
 {
+    [Authorize(Roles = "Admin,Owner")]
     [Area("admin")]
     public class ItemsController : Controller
     {
@@ -18,14 +11,17 @@ namespace ElectronicsFix.Areas.admin.Controllers
             _context = context;
         }
 
-        #region Method
+        #region Methods
 
+        // GET: Items
         public async Task<IActionResult> Index(int? categoryId)
         {
             try
             {
+                // Load categories that are not marked for deletion
                 ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
 
+                // Load items based on category filter
                 var items = categoryId == null
                     ? await _context.Items.Include(i => i.ItemDetails).Include(i => i.Category).Where(i => i.OnDelete == false).ToListAsync()
                     : await _context.Items
@@ -36,13 +32,14 @@ namespace ElectronicsFix.Areas.admin.Controllers
 
                 return View(items);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "An error occurred while loading the items.");
+                ModelState.AddModelError("", $"An error occurred while loading the items: {ex.Message}");
                 return View(new List<Item>());
             }
         }
 
+        // GET: Items/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
@@ -59,9 +56,9 @@ namespace ElectronicsFix.Areas.admin.Controllers
 
                 return View(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "An error occurred while retrieving the item details.");
+                ModelState.AddModelError("", $"An error occurred while retrieving the item details: {ex.Message}");
                 return View();
             }
         }
@@ -70,25 +67,24 @@ namespace ElectronicsFix.Areas.admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            // Load categories for the dropdown
             ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
             return View();
         }
 
         // POST: Items/Create
-        // POST: Items/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Item item, ItemDetail itemDetail, IFormFile ImagePath)
+        public async Task<IActionResult> Create(Item item, IFormFile? File)
         {
-                // Upload image file if provided and assign to ImagePath property
-                if (File != null)
-                {
-                    item.ImagePath = await ClsUiHelper.UploadImage(File, "Items");
+            // Upload image file if provided
+            if (File != null)
+            {
+                item.ImagePath = await ClsUiHelper.UploadImage(File, "Items");
+                ModelState.Remove("ImagePath");
+            }
 
-                    ModelState.Remove("ImagePath");
-                }
-                
-            // تحقق من صحة البيانات
+            // Validate the data
             if (!ModelState.IsValid)
             {
                 ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
@@ -97,18 +93,22 @@ namespace ElectronicsFix.Areas.admin.Controllers
 
             try
             {
-                // الربط بين الـ Item والـ ItemDetail
-                item.ItemDetails = itemDetail;
-                item.ItemDetails.CreatedDate = DateTime.Now;
+                // Check if item details are provided
+                if (item.ItemDetails != null)
+                {
+                    item.ItemDetails.CreatedDate = DateTime.Now;
+                    _context.Add(item.ItemDetails);
+                    await _context.SaveChangesAsync();
+                }
 
-                // حفظ البيانات
                 _context.Add(item);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "An error occurred while creating the item.");
+                ModelState.AddModelError("", $"An error occurred while creating the item: {ex.Message}");
                 ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
                 return View(item);
             }
@@ -116,45 +116,48 @@ namespace ElectronicsFix.Areas.admin.Controllers
 
         // GET: Items/Edit/5
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            // جلب العنصر مع التفاصيل الخاصة به من قاعدة البيانات
-            var item = _context.Items
-                .Include(i => i.ItemDetails) // تضمين التفاصيل
-                .FirstOrDefault(i => i.ItemId == id);
+            var item = await _context.Items
+                .Include(i => i.ItemDetails)
+                .FirstOrDefaultAsync(i => i.ItemId == id);
 
-            if (item == null)
-            {
-                return NotFound();
-            }
+            if (item == null) return NotFound();
 
-            // تمرير البيانات إلى الـ View لعرض النموذج
-            ViewBag.Categories = _context.Categories.ToList(); // لملء قائمة الفئات
+            ViewBag.Categories = await _context.Categories.ToListAsync(); // Load categories for the dropdown
             return View(item);
         }
 
         // POST: Items/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Item item)
+        public async Task<IActionResult> Edit(int id, Item item, IFormFile? File)
         {
-            if (id != item.ItemId)
+            // Upload image file if provided
+            if (File != null)
             {
-                return NotFound();
+                item.ImagePath = await ClsUiHelper.UploadImage(File, "Items");
+                ModelState.Remove("ImagePath");
             }
+
+            if (id != item.ItemId) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // تحديث العنصر مع التفاصيل الخاصة به
+                    if (item.ItemDetails != null)
+                    {
+                        item.ItemDetails.UpdatedDate = DateTime.Now;
+                        _context.Add(item.ItemDetails);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    // Update the item
                     _context.Update(item);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -170,69 +173,11 @@ namespace ElectronicsFix.Areas.admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Categories = _context.Categories.ToList(); // لملء قائمة الفئات إذا حدث خطأ
+            ViewBag.Categories = await _context.Categories.ToListAsync(); // Load categories if there's an error
             return View(item);
         }
 
-        // للتحقق إذا كان العنصر موجودًا أم لا
-        //private bool ItemExists(int id)
-        //{
-        //    return _context.Items.Any(e => e.ItemId == id);
-        //}
-
-
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null) return NotFound();
-
-        //    try
-        //    {
-        //        var item = await _context.Items.FindAsync(id);
-        //        if (item == null) return NotFound();
-
-        //        ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
-        //        return View(item);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        ModelState.AddModelError("", "An error occurred while preparing the edit form.");
-        //        return View();
-        //    }
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("ItemId,ItemName,SalesPrice,PurchasePrice,CategoryId,ItemType,ImagePath,Description")] Item item)
-        //{
-        //    if (id != item.ItemId) return NotFound();
-
-        //    if (!ModelState.IsValid)
-        //    {
-        //        ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
-        //        return View(item);
-        //    }
-
-        //    try
-        //    {
-        //        item.ItemDetails.UpdatedDate = DateTime.Now;
-        //        _context.Update(item);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ItemExists(item.ItemId)) return NotFound();
-        //        else throw;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        ModelState.AddModelError("", "An error occurred while editing the item.");
-        //        ViewBag.Categories = await _context.Categories.Where(a => a.OnDelete == false).ToListAsync();
-        //        return View(item);
-        //    }
-        //}
-
+        // GET: Items/Delete/5
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -248,13 +193,14 @@ namespace ElectronicsFix.Areas.admin.Controllers
 
                 return View(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "An error occurred while preparing the delete form.");
+                ModelState.AddModelError("", $"An error occurred while preparing the delete form: {ex.Message}");
                 return View();
             }
         }
 
+        // POST: Items/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -275,9 +221,9 @@ namespace ElectronicsFix.Areas.admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "An error occurred while deleting the item.");
+                ModelState.AddModelError("", $"An error occurred while deleting the item: {ex.Message}");
                 return View();
             }
         }

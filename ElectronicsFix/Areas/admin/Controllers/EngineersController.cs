@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Domains;  // تم إضافة الـ using لكلاس Engineer
-using System.Threading.Tasks;
-using System;
-using System.Linq;
-
-namespace ElectronicsFix.Areas.admin.Controllers
+﻿namespace ElectronicsFix.Areas.admin.Controllers
 {
     // Specifies that this controller belongs to the "admin" area
+    [Authorize(Roles = "Admin,Owner")]
     [Area("admin")]
     public class EngineersController : Controller
     {

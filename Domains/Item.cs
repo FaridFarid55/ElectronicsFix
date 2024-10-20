@@ -1,10 +1,8 @@
-
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
 namespace Domains
 {
     public partial class Item
     {
+        [Key]
         public int ItemId { get; set; }
 
         [Required(ErrorMessage = "Item name is required.")]
