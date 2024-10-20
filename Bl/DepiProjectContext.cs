@@ -15,6 +15,7 @@ public partial class DepiProjectContext : DbContext
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Consultation> Consultations { get; set; }
+    public DbSet<Task> Tasks { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
 
