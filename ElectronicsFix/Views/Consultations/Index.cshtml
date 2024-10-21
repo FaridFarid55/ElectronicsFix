@@ -16,7 +16,6 @@
                 <th>@Html.DisplayNameFor(model => model.Status)</th>
                 <th>@Html.DisplayNameFor(model => model.IssueDescription)</th>
                 <th>@Html.DisplayNameFor(model => model.ConsultationCost)</th>
-                <th>@Html.DisplayNameFor(model => model.Customer)</th>
                 <th>@Html.DisplayNameFor(model => model.Engineer)</th>
                 <th>Actions</th>
             </tr>
@@ -41,7 +40,6 @@
                     <td>@Html.DisplayFor(modelItem => item.Status)</td>
                     <td>@Html.DisplayFor(modelItem => item.IssueDescription)</td>
                     <td>@Html.DisplayFor(modelItem => item.ConsultationCost)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Customer.FirstName) @Html.DisplayFor(modelItem => item.Customer.LastName)</td>
                     <td>@Html.DisplayFor(modelItem => item.Engineer.FirstName) @Html.DisplayFor(modelItem => item.Engineer.LastName)</td>
                     <td>
                         <a asp-controller="Consultations" asp-action="Edit" asp-route-id="@item.ConsultationId" title="Edit">Edit</a> |

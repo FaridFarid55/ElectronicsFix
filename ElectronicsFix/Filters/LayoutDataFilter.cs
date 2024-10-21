@@ -2,11 +2,11 @@
 
 public class LayoutDataFilter : IAsyncActionFilter
 {
-    // Filed
+    // Fields
     private readonly ISettings oClsSettings;
     private readonly DepiProjectContext _Context;
 
-    //Constrictor
+    // Constructor
     public LayoutDataFilter(ISettings oClsSettings, DepiProjectContext _Context)
     {
         this.oClsSettings = oClsSettings;
@@ -14,7 +14,6 @@ public class LayoutDataFilter : IAsyncActionFilter
     }
 
     // Method
-
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
 
@@ -39,7 +38,7 @@ public class LayoutDataFilter : IAsyncActionFilter
             LinkedIn_Link = item.LinkedIn_Link
         };
 
-
+        // Attach ViewData to the controller
         var controller = context.Controller as Controller;
         if (controller != null)
         {
