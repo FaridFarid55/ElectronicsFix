@@ -13,6 +13,7 @@ namespace ElectronicsFix.Controllers
         }
 
         // GET: Customer/Profile
+        [HttpGet]
         public IActionResult Profile()
         {
             // الحصول على البريد الإلكتروني الخاص بالعميل من الجلسة
@@ -22,7 +23,7 @@ namespace ElectronicsFix.Controllers
             var customer = _context.Customers.FirstOrDefault(c => c.Email == email);
             if (customer != null)
             {
-                return View("~/Views/Customer/Profile.cshtml", customer);
+                return View("Profile", customer);
             }
 
             // إذا لم يتم العثور على العميل
@@ -30,8 +31,8 @@ namespace ElectronicsFix.Controllers
         }
 
 
-        [HttpGet("Edit")]
-        public IActionResult Edit()
+        [HttpGet]
+        public IActionResult Edit1()
         {
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
             var customer = _context.Customers.FirstOrDefault(e => e.Email == email);
@@ -43,9 +44,9 @@ namespace ElectronicsFix.Controllers
             return View(customer);
         }
 
-        [HttpPost("Edit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("FirstName,LastName,Phone,Address,Password,ConfirmPassword")] Customer customer)
+        public async Task<IActionResult> Edit1(Customer customer)
         {
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
             var existingCustomer = await _context.Customers.FirstOrDefaultAsync(e => e.Email == email);
@@ -54,6 +55,10 @@ namespace ElectronicsFix.Controllers
             {
                 return NotFound();
             }
+
+            ModelState.Remove("Password");
+            //  ModelState.Remove("Logo");
+            ModelState.Remove("ConfirmPassword");
 
             if (!ModelState.IsValid)
             {
@@ -82,7 +87,7 @@ namespace ElectronicsFix.Controllers
                 _context.Update(existingCustomer);
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Customer details updated successfully.";
-                return RedirectToAction("Views/Customer/Profile");
+                return RedirectToAction("Profile");
             }
             catch (Exception ex)
             {

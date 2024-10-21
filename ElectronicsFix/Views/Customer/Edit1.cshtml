@@ -8,18 +8,18 @@
     <h3 class="page-title"> Edit Customer </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="Customer" asp-action="Profile">Customer Profile</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Customer" asp-action="Edit1">Customer Profile</a></li>
             <li class="breadcrumb-item active" aria-current="page">Edit Customer</li>
         </ol>
     </nav>
 </div>
 
-<div style="padding:20px;" class="card shadow-sm mb-4">
+<div style="padding:20px; class="card shadow-sm mb-4">
     <div class="card-header bg-primary text-white">
         <h4 class="card-title">Edit Customer</h4>
     </div>
     <div class="card-body">
-        <form asp-controller="Profile" asp-action="Edit">
+        <form asp-controller="Customer" asp-action="Edit1">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CustomerId" />
             <input type="hidden" asp-for="Email" />
@@ -66,12 +66,11 @@
     </div>
 </div>
 
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
 }
+
 @if (TempData["SaveSuccessful"] != null)
 {
     <script>
