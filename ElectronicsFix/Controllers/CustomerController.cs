@@ -1,13 +1,8 @@
-﻿using Domains;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TextTemplating;
-using System.Security.Claims;
-
+﻿using System.Security.Claims;
 
 namespace ElectronicsFix.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Customer")]
     public class CustomerController : Controller
     {
         private readonly DepiProjectContext _context;

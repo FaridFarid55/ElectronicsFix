@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using System.Linq;
+﻿using System.Security.Claims;
 
 namespace ElectronicsFix.Controllers
 {
-    [Authorize]
-    [Route("Engineer")]
+    [Authorize(Roles = "Engineer")]
     public class EngineerController : Controller
     {
         private readonly DepiProjectContext _context;
 
         public EngineerController(DepiProjectContext context)
         {
+
+
             _context = context;
         }
 

@@ -1,44 +1,59 @@
-﻿@model ElectronicsFix.Models.ItemViewModel
+﻿@model  ItemViewModel
 
 @{
-	ViewData["Title"] = $"{Model.Item.ItemName}";
+	// Set the page title to the item name
+	ViewData["Title"] = Model.Item.ItemName;
 
-	dynamic itemPrice;
-	if (Model.ItemDiscount.DiscountPercent == 0 || Model.ItemDiscount.DiscountPercent == null)
-		itemPrice = Model.Item.SalesPrice;
-	else
-		itemPrice = Model.Item.SalesPrice - (Model.Item.SalesPrice * Model.ItemDiscount.DiscountPercent / 100);
+	// Calculate the item price considering discounts
+	var itemPrice = (Model.ItemDiscount?.DiscountPercent == null || Model.ItemDiscount.DiscountPercent == 0)
+		? Model.Item.SalesPrice
+		: Model.Item.SalesPrice - (Model.Item.SalesPrice * (Model.ItemDiscount.DiscountPercent ?? 0) / 100);
 
+	// Store the main entities
 	var theItem = Model.Item;
 	var itemDiscount = Model.ItemDiscount;
 	var itemDetail = Model.ItemDetail;
 
-	ElectronicsFix.Models.HomeIndexViewModel homeModel = ViewBag.newItems;
+	// Retrieve the HomeIndexViewModel from ViewBag
+	var homeModel = ViewBag.newItems as ElectronicsFix.Models.HomeIndexViewModel;
 
-	var itemDetailsList = homeModel.ItemDetails.ToList();
-	var itemDiscountsList = homeModel.ItemDiscounts.ToList();
+	// Declare relatedItems as List<dynamic>
+	//var relatedItems = new List<dynamic>(); // استخدام dynamic
 
-	Random random = new Random();
-	
-	var relatedItems = homeModel.Items.Where(item => itemDetailsList
-				.Any(newItemDetails => newItemDetails.ItemDetailsId == item.ItemDetailsId))
-				.Where(item => (item.ItemType == theItem.ItemType || item.CategoryId == theItem.CategoryId) && item.ItemId != theItem.ItemId)
-				.OrderBy(x => random.Next()).Take(4)
-				.Select(item => new
-				{
-					ItemId = item.ItemId,
-					ItemName = item.ItemName,
-					SalesPrice = item.SalesPrice,
-					CategoryId = item.CategoryId,
-					ItemType = item.ItemType,
-					ItemDetailsId = item.ItemDetailsId,
-					ImagePath = item.ImagePath,
-					DiscountPercent = itemDiscountsList
-						.Where(itemDiscount => itemDiscount.ItemId == item.ItemId)
-						.Select(itemDiscount => itemDiscount.DiscountPercent).FirstOrDefault()
-				}).ToList();
+	// Ensure data exists before proceeding
 
+		// Convert lists for easier access
+		var itemDetailsList = homeModel.ItemDetails.ToList();
+		var itemDiscountsList = homeModel.ItemDiscounts.ToList();
+
+		// Initialize random generator for shuffling items
+		Random random = new Random();
+
+		// Fetch related items based on ItemType or CategoryId, excluding the current item
+		var relatedItems = homeModel.Items
+			.Where(item => itemDetailsList.Any(newItemDetails => newItemDetails.ItemDetailsId == item.ItemDetailsId))
+			.Where(item => (item.ItemType == theItem.ItemType || item.CategoryId == theItem.CategoryId) && item.ItemId != theItem.ItemId)
+			.OrderBy(_ => random.Next()) // Shuffle items
+			.Take(4)
+			.Select(item => new
+			{
+				item.ItemId,
+				item.ItemName,
+				item.SalesPrice,
+				item.CategoryId,
+				item.ItemType,
+				item.ItemDetailsId,
+				item.ImagePath,
+				DiscountPercent = itemDiscountsList
+					.Where(discount => discount.ItemId == item.ItemId)
+					.Select(discount => discount.DiscountPercent)
+					.FirstOrDefault() ?? 0 // Default to 0 if no discount found
+			})
+			.ToList();
 }
+
+
+
 
 
 
@@ -143,7 +158,7 @@
 					<ul class="product-links">
 						<li>Category:</li>
 						<li><a asp-action="index" asp-controller="Store" asp-route-category="@Model.Item.ItemType">@Model.Item.ItemType</a></li>
-						<li><a asp-action="index" asp-controller="Store" asp-route-brand="@Model.Category.CategoryName" href="#">@Model.Category.CategoryName</a></li>
+						<li><a asp-action="index" asp-controller="Store" asp-route-brand="@Model.Category.CategoryName">@Model.Category.CategoryName</a></li>
 					</ul>
 
 					<ul class="product-links">
