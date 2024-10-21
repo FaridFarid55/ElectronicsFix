@@ -42,9 +42,9 @@
                     <td>@Html.DisplayFor(modelItem => item.ConsultationCost)</td>
                     <td>@Html.DisplayFor(modelItem => item.Engineer.FirstName) @Html.DisplayFor(modelItem => item.Engineer.LastName)</td>
                     <td>
-                        <a asp-controller="Consultations" asp-action="Edit" asp-route-id="@item.ConsultationId" title="Edit">Edit</a> |
-                        <a asp-controller="Consultations" asp-action="Details" asp-route-id="@item.ConsultationId" title="Details">Details</a> |
-                        <a asp-controller="Consultations" asp-action="Delete" asp-route-id="@item.ConsultationId" title="Delete">Delete</a>
+                        <a asp-controller="Consultations" asp-action="Edit" asp-route-id="@item.ConsultationId" title="Edit"><i class="fas fa-edit" style="font-size: 1.2em; color: #D10024;"></i></a> 
+                        <a asp-controller="Consultations" asp-action="Details" asp-route-id="@item.ConsultationId" title="Details"><i class="fas fa-info-circle" style="font-size: 1.2em; color: #D10024;"></i></a>
+                        <a asp-controller="Consultations" asp-action="Delete" asp-route-id="@item.ConsultationId" title="Delete"><i class="fas fa-trash-alt" style="font-size: 1.2em; color: #D10024;"></i></a>
                     </td>
                 </tr>
             }
