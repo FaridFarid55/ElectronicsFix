@@ -145,21 +145,17 @@ namespace ElectronicsFix.Controllers
         // POST: Consultations/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ConsultationId,EngineerId,EndDate,Status,IssueDescription,ConsultationCost")] Consultation consultation)
+        public async Task<IActionResult> Edit(int id, [Bind("ConsultationId,EngineerId,CustomerId,EndDate,Status,IssueDescription,ConsultationCost")] Consultation consultation)
         {
      
             if (id != consultation.ConsultationId)
             {
-                Console.WriteLine("1111111");
-                Console.WriteLine(id);
-                Console.WriteLine(consultation.ConsultationId);
                 return NotFound();
             }
 
             var customerId = await GetCustomerIdByEmailAsync();
             if (consultation.CustomerId != customerId)
             {
-                Console.WriteLine("2222222222");
                 return NotFound();
 
             }
