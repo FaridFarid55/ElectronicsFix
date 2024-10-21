@@ -1,6 +1,3 @@
-using ElectronicsFix.Models;
-using System.Linq;
-
 namespace ElectronicsFix.Controllers
 {
     public class HomeController : Controller
@@ -18,7 +15,7 @@ namespace ElectronicsFix.Controllers
         //public HomeController(ILogger<HomeController> logger)
         //{
         //    _logger = logger;
-            
+
         //}
         public HomeController(DepiProjectContext context)
         {
@@ -29,7 +26,8 @@ namespace ElectronicsFix.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            HomeIndexViewModel viewModel = new HomeIndexViewModel {
+            HomeIndexViewModel viewModel = new HomeIndexViewModel
+            {
 
                 Items = _Context.Items.ToList(),
                 ItemDetails = _Context.ItemDetails.ToList(),
@@ -37,32 +35,32 @@ namespace ElectronicsFix.Controllers
             };
 
 
-			DateTime dateTime = _Context.ItemDiscounts.OrderBy(x => x.EndDate)
+            DateTime dateTime = _Context.ItemDiscounts.OrderBy(x => x.EndDate)
                 .Select(x => x.EndDate).LastOrDefault();
 
-			//DateTime targetDate = new DateTime(2024, 12, 31, 23, 59, 59);
-			DateTime targetDate = dateTime;
-			DateTime currentDate = DateTime.Now;
+            //DateTime targetDate = new DateTime(2024, 12, 31, 23, 59, 59);
+            DateTime targetDate = dateTime;
+            DateTime currentDate = DateTime.Now;
 
-			TimeSpan timeRemaining = targetDate - currentDate;
+            TimeSpan timeRemaining = targetDate - currentDate;
 
-			ViewBag.Days = timeRemaining.Days;
-			ViewBag.Hours = timeRemaining.Hours;
-			ViewBag.Minutes = timeRemaining.Minutes;
-			ViewBag.Seconds = timeRemaining.Seconds;
+            ViewBag.Days = timeRemaining.Days;
+            ViewBag.Hours = timeRemaining.Hours;
+            ViewBag.Minutes = timeRemaining.Minutes;
+            ViewBag.Seconds = timeRemaining.Seconds;
 
-            
+
             var topSelling = _Context.Orders.GroupBy(order => order.ItemId)
                 .Select(x => new TopSelling
-				{
+                {
                     ItemId = x.Key, // represents the value you grouped by which is ItemID
-					TotalSold = x.Sum(order => order.Quantity)
+                    TotalSold = x.Sum(order => order.Quantity)
                 }).OrderByDescending(x => x.TotalSold).ToList();
-            
+
 
             ViewBag.TopSelling = topSelling;
 
-			return View(viewModel);
+            return View(viewModel);
         }
     }
 }
