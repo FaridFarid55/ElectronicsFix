@@ -117,7 +117,29 @@ This project focuses on solving real-world problems faced by electronic maintena
 * Admin Dashboard
 * Engineer Panel
 
-> *(Add screenshots for better presentation)*
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/1.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/2.jpg)
+ ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/3.jpg)
+ ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/4.jpg)
+ ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/5.jpg)
+ ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/6.jpg)
+ ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/7.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/8.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/9.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/10.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/11.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/12.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/13.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/14.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/15.jpg)
+![preview img](/ElectronicsFix/wwwroot/img/Screenshots/16.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/17.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/18.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/19.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/20.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/21.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/22.jpg)
+> ![preview img](/ElectronicsFix/wwwroot/img/Screenshots/23.jpg)
 
 ---
 
