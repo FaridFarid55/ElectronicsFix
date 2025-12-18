@@ -136,28 +136,3 @@ This project focuses on solving real-world problems faced by electronic maintena
 * Chat system between customer and engineer
 * Mobile application version
 
----
-
-## 🧾 Intellectual Property & License
-
-© 2025 **Farid** – All Rights Reserved.
-
-This project, including its source code, database design, UI, and documentation, is the exclusive intellectual property of the author.
-
-* This repository is provided **for educational and portfolio purposes only**.
-* Copying, modifying, or using this project for commercial purposes without explicit written permission is strictly prohibited.
-
-Unauthorized use may result in legal consequences.
-
----
-
-## 📩 Contact
-
-For questions or collaboration requests:
-
-* **LinkedIn:** [https://www.linkedin.com/](https://www.linkedin.com/)
-* Or open an issue in the repository
-
----
-
-> Designed and developed with a focus on clean code, security, and real-world business needs 🚀
