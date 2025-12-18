@@ -121,6 +121,121 @@ This project focuses on solving real-world problems faced by electronic maintena
 
 ---
 
+## 🗄️ Database Design & Data Model
+
+The **ElectronicsFix** platform relies on a well-structured **relational database** designed to ensure data integrity, scalability, and clear separation of responsibilities between system entities.
+
+### 1️⃣ Consultation
+
+Represents consultations between customers and engineers.
+
+* **Fields:** StartDate, EndDate, Status, ProblemDescription
+* **Relations:**
+
+  * Many-to-One with **Engineer**
+  * Many-to-One with **Customer**
+
+### 2️⃣ Engineer
+
+Stores information about registered engineers.
+
+* **Fields:** FullName, PhoneNumber, Address, Email, PasswordHash
+* **Relations:**
+
+  * One-to-Many with **Consultation**
+
+### 3️⃣ Customer
+
+Contains customer account data.
+
+* **Fields:** FullName, PhoneNumber, Email, PasswordHash
+* **Relations:**
+
+  * One-to-Many with **Consultation**
+  * One-to-Many with **Order**
+
+### 4️⃣ Order
+
+Represents customer orders.
+
+* **Fields:** Quantity, TotalPrice, OrderDate
+* **Relations:**
+
+  * Many-to-One with **Customer**
+  * Many-to-One with **Item**
+  * One-to-One with **Delivery**
+
+### 5️⃣ Delivery
+
+Tracks order delivery details.
+
+* **Fields:** DeliveryPersonName, Address, DeliveryStatus
+* **Relations:**
+
+  * One-to-One with **Order**
+
+### 6️⃣ Item
+
+Represents products and repairable items.
+
+* **Fields:** ItemName, SalePrice, PurchasePrice, Description
+* **Relations:**
+
+  * Many-to-One with **Category**
+  * Many-to-One with **ItemType**
+  * One-to-Many with **Image**
+  * One-to-One with **ItemDetails**
+  * One-to-Many with **Order**
+  * One-to-Many / One-to-One with **ItemDiscount**
+
+### 7️⃣ ItemDiscount
+
+Stores discount information applied to items.
+
+* **Fields:** DiscountPercentage, ExpirationDate
+* **Relations:**
+
+  * Related to **Item**
+
+### 8️⃣ Category
+
+Organizes items into logical groups.
+
+* **Fields:** CategoryName, CreatedAt, UpdatedAt
+
+### 9️⃣ ItemType
+
+Defines the type of item.
+
+* **Examples:** Laptop, RAM, CPU, Monitor
+
+### 🔟 ItemDetails
+
+Stores technical specifications for items.
+
+* **Fields:** Processor, RAM, ScreenResolution, OperatingSystem
+* **Relations:**
+
+  * One-to-One with **Item**
+
+### 1️⃣1️⃣ Image
+
+Stores item images.
+
+* **Relations:**
+
+  * One-to-Many with **Item**
+
+### Database Principles Applied
+
+* Relational Modeling
+* Data Normalization
+* Referential Integrity
+* One-to-One & One-to-Many Relationships
+* Entity Framework Core (Fluent API & Data Annotations)
+
+---
+
 ## 🔒 Security Considerations
 
 * Secure authentication using ASP.NET Core Identity
@@ -136,3 +251,6 @@ This project focuses on solving real-world problems faced by electronic maintena
 * Chat system between customer and engineer
 * Mobile application version
 
+---
+
+> Designed and developed with a focus on clean code, security, and real-world business needs 🚀
