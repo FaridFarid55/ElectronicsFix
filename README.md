@@ -274,5 +274,18 @@ Stores item images.
 * Mobile application version
 
 ---
+## 🎓 Graduation Project
 
-> Designed and developed with a focus on clean code, security, and real-world business needs 🚀
+This project was developed as a **graduation project** under the **Egyptian Ministry of Communications and Information Technology (MCIT)**  
+within the **Rawand One Initiative**, which aims to empower young developers and support real-world software solutions.
+
+### 👥 Team Members (6 Members)
+
+- Farid Farid — *Team Leader*
+- Khaled Salah
+- Marwan Qassem
+- Menna Allah
+- Mostafa
+- Amira
+
+The project was completed through team collaboration, task distribution, and agile development practices, with a strong focus on clean architecture, security, and real business requirements.
